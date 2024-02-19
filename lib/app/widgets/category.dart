@@ -1,8 +1,9 @@
 import 'package:benchmark/app/config/color.dart';
-import 'package:benchmark/app/modules/student_view/homepage.dart/all_subject_page.dart';
-import 'package:benchmark/app/modules/student_view/homepage.dart/homepage_controller.dart';
+import 'package:benchmark/app/modules/common/all_Subject/all_subject_page.dart';
+import 'package:benchmark/app/modules/common/all_Subject/subject_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_navigation/src/routes/default_transitions.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Category {
@@ -13,7 +14,6 @@ class Category {
 }
 
 class CategoryWidget extends StatelessWidget {
-  final subjectcontroller = Get.put(SubjectController());
   List<Category> categories = [
     Category(name: '11 Science', image: 'assets/momentum.png'),
     Category(name: '12 Science', image: 'assets/momentum.png'),
@@ -25,7 +25,7 @@ class CategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(10.0),
       child: Container(
         color: Colors.white,
         width: double.infinity,
@@ -41,10 +41,11 @@ class CategoryWidget extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                subjectcontroller.getSubject(categories[index].name);
-                Get.to(() => AllSubjectPage(
-                      title: categories[index].name,
-                    ));
+                // Get.to(
+                //     () => AllSubjectPage(
+                //           title: categories[index].name,
+                //         ),
+                // transition: Transition.leftToRight);
               },
               child: CategoryItem(
                 category: categories[index],
@@ -69,7 +70,7 @@ class CategoryItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        border: Border.all(color: greyColor),
+        border: Border.all(color: mainColor),
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Row(

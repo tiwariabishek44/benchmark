@@ -29,7 +29,7 @@ mongoose
   .catch((e) => {
     console.log(e);
   });
-  app.listen(3000, '192.168.1.186', () => {
+  app.listen(3000, '192.168.1.69', () => {
     console.log('Server is running on http://192.168.1.186:3000');
   });
   

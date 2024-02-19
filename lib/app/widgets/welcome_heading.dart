@@ -17,35 +17,38 @@ class WelcomeHeading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: double.infinity, // Takes full screen width
-          alignment: Alignment.center, // Aligns child text to the center
-          child: Column(
-            children: [
-              Text(
-                mainHeading,
-                textAlign:
-                    TextAlign.center, // Centers text within the container
-                style: TextStyle(
-                  color: secondaryColor,
-                  fontFamily: FontStyles.poppins,
-                  fontSize: 23.sp, // Use screenutil for font sizing
-                  fontWeight: FontWeight.bold,
+    return Padding(
+      padding: EdgeInsets.only(bottom: 3.0.h),
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity, // Takes full screen width
+            alignment: Alignment.center, // Aligns child text to the center
+            child: Column(
+              children: [
+                Text(
+                  mainHeading,
+                  textAlign:
+                      TextAlign.center, // Centers text within the container
+                  style: TextStyle(
+                    color: mainColor,
+                    fontFamily: FontStyles.poppins,
+                    fontSize: 23.sp, // Use screenutil for font sizing
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Text(
-                subHeading,
-                style: TextStyle(
-                  color: secondaryColor,
-                  fontSize: 17.sp, // Use screenutil for font sizing
+                Text(
+                  subHeading,
+                  style: TextStyle(
+                    color: mainColor,
+                    fontSize: 17.sp, // Use screenutil for font sizing
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -1,0 +1,21 @@
+{
+    "11Science": [
+      {"name": "11 Nepali", "image": "assets/images.jpeg", "colors": ["#FF0000", "#FFFF00"]},
+      {"name": "11 Physics", "image": "assets/images.jpeg", "colors": ["#FF0000", "#FFFF00"]},
+      {"name": "11 Chemistry", "image": "assets/images.jpeg", "colors": ["#0000FF", "#00FF00"]}
+     ],
+    "12Science": [
+      {"name": "12 Nepali", "image": "assets/images.jpeg", "colors": ["#FF0000", "#FFFF00"]},
+      {"name": "12 Physics", "image": "assets/images.jpeg", "colors": ["#FF0000", "#FFFF00"]},
+      {"name": "12 Chemistry", "image": "assets/images.jpeg", "colors": ["#0000FF", "#00FF00"]}
+     ],
+    "11Management": [
+      {"name": "11 English", "image": "assets/images.jpeg", "colors": ["#FF0000", "#FFFF00"]},
+      {"name": "11 Nepali", "image": "assets/images.jpeg", "colors": ["#0000FF", "#00FF00"]}
+     ],
+    "12Management": [
+      {"name": "12 English", "image": "assets/images.jpeg", "colors": ["#FF0000", "#FFFF00"]},
+      {"name": "12 Nepali", "image": "assets/images.jpeg", "colors": ["#0000FF", "#00FF00"]}
+     ]
+  }
+  

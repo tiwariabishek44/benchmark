@@ -17,13 +17,13 @@ class LoadingScreen extends StatelessWidget {
         BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 0.1, sigmaY: 0.1),
           child: Container(
-            color: Colors.transparent,
+            color: whiteColor,
           ),
         ),
         // Loading indicator
         Center(
-            child: SpinKitFadingCircle(
-          color: primaryColor,
+            child: CircularProgressIndicator(
+          color: AppColors.mainColor,
         )),
       ],
     );

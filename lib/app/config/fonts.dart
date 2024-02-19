@@ -9,6 +9,7 @@ class FontStyles {
   static const medium700 = FontWeight.w700;
   static const medium400 = FontWeight.w400;
   static const bold900 = FontWeight.w900;
+
   static const textAlign = TextAlign.center;
   static const overFlow = TextOverflow.ellipsis;
 }

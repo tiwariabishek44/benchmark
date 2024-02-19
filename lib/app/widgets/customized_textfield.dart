@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CustomizedTextfield extends StatelessWidget {
-  final TextEditingController myController;
+  final TextEditingController? myController;
   final String? hintText;
   final IconData icon;
   final String? Function(String?) validator; // Validator function
@@ -12,7 +12,7 @@ class CustomizedTextfield extends StatelessWidget {
     Key? key,
     required this.icon,
     required this.validator,
-    required this.myController,
+    this.myController,
     this.hintText,
   }) : super(key: key);
 
@@ -21,29 +21,30 @@ class CustomizedTextfield extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
+        style: TextStyle(color: mainColor),
         validator: validator,
         controller: myController,
         decoration: InputDecoration(
           prefixIcon: Icon(
             icon,
-            color: secondaryColor,
+            color: mainColor,
             size: 30,
           ),
 
           contentPadding: EdgeInsets.symmetric(
               vertical: 15, horizontal: 15), // Adjust the vertical padding
           enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: secondaryColor, width: 1),
+            borderSide: const BorderSide(color: mainColor, width: 1),
             borderRadius: BorderRadius.circular(10),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: secondaryColor, width: 1),
+            borderSide: const BorderSide(color: mainColor, width: 1),
             borderRadius: BorderRadius.circular(10),
           ),
           fillColor: Color.fromARGB(255, 255, 255, 255),
           filled: true,
           labelText: hintText,
-          labelStyle: TextStyle(color: secondaryColor),
+          labelStyle: TextStyle(color: mainColor),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),

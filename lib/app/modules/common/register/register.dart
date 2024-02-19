@@ -1,12 +1,15 @@
 import 'package:benchmark/app/config/color.dart';
+import 'package:benchmark/app/config/constants.dart';
 import 'package:benchmark/app/config/fonts.dart';
+import 'package:benchmark/app/modules/common/loginoption/login_option_controller.dart';
 import 'package:benchmark/app/modules/common/register/register_controller.dart';
-import 'package:benchmark/app/widgets/customized_button.dart';
+import 'package:benchmark/app/widgets/custom_button.dart';
 import 'package:benchmark/app/widgets/customized_textfield.dart';
 import 'package:benchmark/app/widgets/welcome_heading.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -18,36 +21,23 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final registercontroller = Get.put(RegisterController());
+  final loginOptionController = Get.put(LoginOptionController());
   String? _selectedOption;
   final List<String> options = [
-    'BscCSIT-1st Sem',
-    'BscCSIT-2nd Sem',
-    'BscCSIT-3rd Sem',
-    'BscCSIT-4th Sem',
-    'BscCSIT-5th Sem',
-    'BscCSIT-6th Sem',
-    'BscCSIT-7th Sem',
-    'BscCSIT-8th Sem',
-    'BCA-1st Sem',
-    'BCA-2nd Sem',
-    'BCA-3rd Sem',
-    'BCA-4th Sem',
-    'BCA-5th Sem',
-    'BCA-6th Sem',
-    'BCA-7th Sem',
-    'BCA-8th Sem',
+    'Science',
+    'Management',
   ];
   // Replace with your own options
-
-  bool _isPasswordVisible = false;
-  bool _isconrnformPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("User Register")),
+        appBar: AppBar(
+          scrolledUnderElevation: 0,
+          backgroundColor: backgroundColor,
+        ),
         body: Container(
-            color: Colors.white,
+            color: backgroundColor,
             width: MediaQuery.of(context).size.width,
             height: context.height,
             child: SafeArea(
@@ -60,13 +50,16 @@ class _RegisterPageState extends State<RegisterPage> {
                   key: registercontroller.registerFromkey,
                   child: Column(
                     children: [
-                      WelcomeHeading(
-                          mainHeading: "Let's Start  ",
-                          subHeading: 'Create a new account'),
+                      Obx(() => WelcomeHeading(
+                            mainHeading: "Let's Start",
+                            subHeading: loginOptionController.isUser.value
+                                ? "Regster As Student"
+                                : "Register As Teacher",
+                          )),
                       SizedBox(height: 10),
                       CustomizedTextfield(
                         validator: registercontroller.usernameValidator,
-                        icon: Icons.email,
+                        icon: Icons.email_outlined,
                         myController: registercontroller.emailcontroller,
                         hintText: "Email",
                       ),
@@ -82,91 +75,146 @@ class _RegisterPageState extends State<RegisterPage> {
                         myController: registercontroller.namecontroller,
                         hintText: "Name",
                       ),
+                      gapH2,
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextFormField(
-                          validator: registercontroller.passwordValidator,
-                          controller: registercontroller.passwordcontroller,
-                          obscureText:
-                              !_isPasswordVisible, // Toggle the visibility
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 15),
-                            prefixIcon: Icon(Icons.lock_outline),
-                            labelText: 'Password',
-                            labelStyle: TextStyle(color: secondaryColor),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: secondaryColor, width: 1),
-                                borderRadius: BorderRadius.circular(10)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: secondaryColor, width: 1),
-                                borderRadius: BorderRadius.circular(10)),
-                            fillColor: Color.fromARGB(255, 255, 255, 255),
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _isPasswordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off_outlined,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _isPasswordVisible = !_isPasswordVisible;
-                                });
-                              },
-                            ),
+                        padding: const EdgeInsets.all(4.0),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: const Text(
+                            'Select Stream',
+                            style: TextStyle(color: mainColor, fontSize: 15),
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: TextFormField(
-                          validator:
-                              registercontroller.confirmPasswordValidator,
-                          controller:
-                              registercontroller.confirmPasswordController,
-                          obscureText:
-                              !_isconrnformPasswordVisible, // Toggle the visibility
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 15),
-                            prefixIcon: Icon(Icons.lock_outline),
-                            labelText: 'Confirm Password',
-                            labelStyle: TextStyle(color: secondaryColor),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: secondaryColor, width: 1),
-                                borderRadius: BorderRadius.circular(10)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: secondaryColor, width: 1),
-                                borderRadius: BorderRadius.circular(10)),
-                            fillColor: Color.fromARGB(255, 255, 255, 255),
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _isconrnformPasswordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off_outlined,
+                      Obx(() => Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 1, vertical: 3),
+                            child: Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              decoration: BoxDecoration(
+                                color: whiteColor,
+                                borderRadius: BorderRadius.circular(8.0),
+                                border: Border.all(color: mainColor),
                               ),
-                              onPressed: () {
-                                setState(() {
-                                  _isconrnformPasswordVisible =
-                                      !_isconrnformPasswordVisible;
-                                });
-                              },
+                              child: DropdownButton(
+                                isExpanded: true,
+                                iconSize: 36.0,
+                                iconEnabledColor: mainColor,
+                                elevation: 8,
+                                style: TextStyle(color: mainColor),
+                                underline: SizedBox(),
+                                value: registercontroller.selectedValue.value,
+                                items: ['Science', 'Management']
+                                    .map<DropdownMenuItem<String>>(
+                                      (String value) =>
+                                          DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      ),
+                                    )
+                                    .toList(),
+                                onChanged: (newValue) {
+                                  registercontroller
+                                      .updateSelectedValue(newValue!);
+                                },
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
+                          )),
+                      Obx(() => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: TextFormField(
+                              style: TextStyle(color: mainColor),
+                              validator: registercontroller.passwordValidator,
+                              controller: registercontroller.passwordcontroller,
+                              obscureText: registercontroller.isPasswordVisible
+                                  .value, // Toggle the visibility
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 15),
+                                prefixIcon: Icon(
+                                  Icons.lock_outline,
+                                  color: mainColor,
+                                ),
+                                labelText: 'Password',
+                                labelStyle: TextStyle(color: mainColor),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: mainColor, width: 1),
+                                    borderRadius: BorderRadius.circular(10)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: mainColor, width: 1),
+                                    borderRadius: BorderRadius.circular(10)),
+                                fillColor: Color.fromARGB(255, 255, 255, 255),
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    registercontroller.isPasswordVisible.value
+                                        ? Icons.visibility
+                                        : Icons.visibility_off_outlined,
+                                    color: mainColor,
+                                  ),
+                                  onPressed: () {
+                                    registercontroller.isPasswordVisible.value =
+                                        !registercontroller
+                                            .isPasswordVisible.value;
+                                  },
+                                ),
+                              ),
+                            ),
+                          )),
+                      Obx(() => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: TextFormField(
+                              style: TextStyle(color: mainColor),
+                              validator:
+                                  registercontroller.confirmPasswordValidator,
+                              controller:
+                                  registercontroller.confirmPasswordController,
+                              obscureText: registercontroller
+                                  .cornfirmPasswordVisible
+                                  .value, // Toggle the visibility
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 15),
+                                prefixIcon:
+                                    Icon(Icons.lock_outline, color: mainColor),
+                                labelText: 'Confirm Password',
+                                labelStyle: TextStyle(color: mainColor),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: mainColor, width: 1),
+                                    borderRadius: BorderRadius.circular(10)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: mainColor, width: 1),
+                                    borderRadius: BorderRadius.circular(10)),
+                                fillColor: Color.fromARGB(255, 255, 255, 255),
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                      registercontroller
+                                              .cornfirmPasswordVisible.value
+                                          ? Icons.visibility
+                                          : Icons.visibility_off_outlined,
+                                      color: mainColor),
+                                  onPressed: () {
+                                    registercontroller
+                                            .cornfirmPasswordVisible.value =
+                                        !registercontroller
+                                            .cornfirmPasswordVisible.value;
+                                  },
+                                ),
+                              ),
+                            ),
+                          )),
                       GestureDetector(
                         onTap: () {
                           registercontroller.termsAndConditions.value =
@@ -183,14 +231,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                   registercontroller.termsAndConditions.value =
                                       value!;
                                 },
-                                activeColor: primaryColor,
+                                activeColor: Color.fromARGB(255, 55, 116, 92),
                                 checkColor: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(2.5),
                                 ),
                                 splashRadius: 1.5.h,
                                 side: const BorderSide(
-                                  color: primaryColor,
+                                  color: Color.fromARGB(255, 55, 116, 92),
                                   style: BorderStyle.solid,
                                 ),
                               ),
@@ -204,7 +252,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   style: TextStyle(
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.w400,
-                                      color: Colors.black,
+                                      color: Color.fromARGB(255, 59, 89, 63),
                                       fontFamily: FontStyles.poppins),
                                   children: [
                                     TextSpan(
@@ -214,7 +262,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       style: TextStyle(
                                         fontSize: 15.5.sp,
                                         fontWeight: FontWeight.w500,
-                                        color: primaryColor,
+                                        color: Color.fromARGB(255, 55, 116, 92),
                                         fontFamily: FontStyles.poppins,
                                       ),
                                     ),
@@ -225,13 +273,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           ],
                         ),
                       ),
-                      CustomizedButton(
-                        buttonText: "Register",
-                        buttonColor: Colors.black,
-                        textColor: Colors.white,
-                        onPressed: () async {
-                          FocusScope.of(context).unfocus();
+                      CustomButton(
+                        onPressed: () {
+                          registercontroller.registerUser(context);
                         },
+                        text: 'Register',
+                        isLoading: registercontroller.isregisterLoading.value,
                       ),
                       const SizedBox(
                         height: 10,

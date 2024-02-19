@@ -1,82 +1,94 @@
-import 'package:benchmark/app/modules/student_view/homepage.dart/homepage_controller.dart';
-import 'package:benchmark/app/modules/student_view/homepage.dart/note_list.dart';
+import 'package:benchmark/app/config/color.dart';
+import 'package:benchmark/app/config/constants.dart';
+import 'package:benchmark/app/config/fonts.dart';
+import 'package:benchmark/app/modules/common/all_Subject/all_subject_page.dart';
+import 'package:benchmark/app/modules/common/all_Subject/subject_controller.dart';
+import 'package:benchmark/app/modules/common/all_Subject/note_controller.dart';
+import 'package:benchmark/app/widgets/batch_lable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class SubjectList extends StatelessWidget {
   SubjectList({Key? key});
-  final subjectController = Get.put(SubjectController());
+  final noteController = Get.put(NoteController());
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return ListView.builder(
-        shrinkWrap: true,
+    return GridView.builder(
+        shrinkWrap: false,
         physics: ScrollPhysics(),
-        itemCount: subjectController.defaultSubjects.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: InkWell(
-              onTap: () {
-                Get.to(
-                    () => NotesList(
-                          title: subjectController.defaultSubjects[index].name,
-                        ),
-                    transition: Transition.leftToRight);
-              },
-              child: Container(
-                height: 9.h,
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 134, 161, 136),
-                  borderRadius: BorderRadius.circular(5.0),
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 200,
+            childAspectRatio: 0.75,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20),
+        itemCount: allStreams.length,
+        itemBuilder: (BuildContext ctx, index) {
+          return InkWell(
+            onTap: () {
+              Get.to(
+                  () => AllSubjectPage(
+                        title: allStreams[index].name,
+                        subject: allStreams[index].subjects,
+                      ),
+                  duration: duration,
+                  transition: Transition.rightToLeft);
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8.0),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black26,
-                      offset: Offset(0, 2),
-                      blurRadius: 4.0,
-                    ),
-                  ],
-                ),
-                child: Row(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 1,
+                        blurRadius: 3,
+                        offset: const Offset(1, 1))
+                  ]),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      flex: 3,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(5.0),
-                          image: DecorationImage(
-                            image: AssetImage(
-                                subjectController.defaultSubjects[index].image),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                            color: greyColor,
+                            image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: AssetImage(allStreams[index].image)),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                topRight: Radius.circular(15))),
                       ),
                     ),
-                    Expanded(
-                      flex: 7,
-                      child: Container(
-                        padding: EdgeInsets.all(16.0),
-                        child: Text(
-                          "Grade " +
-                              subjectController.defaultSubjects[index].name,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            allStreams[index].name,
+                            textAlign: TextAlign
+                                .center, // Centers text within the container
+                            style: TextStyle(
+                              color: mainColor,
+                              fontFamily: FontStyles.poppins,
+                              fontSize: 17.sp, // Use screenutil for font sizing
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          maxLines: 1,
-                        ),
+                          const BatchLabel(
+                            iconColor: Colors.amber,
+                            iconData: Icons.book,
+                            labelText: '7 subject',
+                            textColor: blackColor,
+                          )
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                    )
+                  ]),
             ),
           );
-        },
-      );
-    });
+        });
   }
 }

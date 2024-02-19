@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
+
+Duration duration = const Duration(milliseconds: 360);
 
 /// Constant sizes to be used in the app (paddings, gaps, rounded corners etc.)
 class Sizes {
@@ -48,3 +51,9 @@ const gapH29 = SizedBox(height: Sizes.p29);
 const gapH32 = SizedBox(height: Sizes.p32);
 const gapH48 = SizedBox(height: Sizes.p48);
 const gapH64 = SizedBox(height: Sizes.p64);
+
+class AppPadding {
+  static EdgeInsetsGeometry get screenHorizontalPadding {
+    return EdgeInsets.symmetric(horizontal: 4.w);
+  }
+}

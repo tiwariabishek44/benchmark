@@ -42,21 +42,22 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SizedBox(height: 10),
             TextFormField(
+              style: TextStyle(color: mainColor),
               validator: logincontroller.passwordValidator,
               controller: logincontroller.passwordcontroller,
               obscureText: !_isPasswordVisible,
               decoration: InputDecoration(
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                prefixIcon: Icon(Icons.lock_outline),
+                prefixIcon: Icon(Icons.lock_outline, color: mainColor),
                 labelText: 'Password',
-                labelStyle: TextStyle(color: secondaryColor),
+                labelStyle: TextStyle(color: mainColor),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: secondaryColor, width: 1),
+                  borderSide: const BorderSide(color: mainColor, width: 1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: secondaryColor, width: 1),
+                  borderSide: const BorderSide(color: mainColor, width: 1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 fillColor: Color.fromARGB(255, 255, 255, 255),
@@ -69,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     _isPasswordVisible
                         ? Icons.visibility
                         : Icons.visibility_off_outlined,
-                    color: secondaryColor,
+                    color: mainColor,
                   ),
                   onPressed: () {
                     setState(() {
@@ -79,60 +80,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                logincontroller.termsAndConditions.value =
-                    !logincontroller.termsAndConditions.value;
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Obx(
-                    () => Checkbox(
-                      value: logincontroller.termsAndConditions.value,
-                      onChanged: (value) {
-                        logincontroller.termsAndConditions.value = value!;
-                      },
-                      activeColor: primaryColor,
-                      checkColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2.5),
-                      ),
-                      splashRadius: 1.5.h,
-                      side: const BorderSide(
-                        color: primaryColor,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    child: RichText(
-                      softWrap: true,
-                      maxLines: 2,
-                      text: TextSpan(
-                        text: "I have read and accept the ",
-                        style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                            fontFamily: FontStyles.poppins),
-                        children: [
-                          TextSpan(
-                            text: "Terms and Privacy Policy",
-                            recognizer: TapGestureRecognizer()..onTap = () {},
-                            style: TextStyle(
-                              fontSize: 15.5.sp,
-                              fontWeight: FontWeight.w500,
-                              color: primaryColor,
-                              fontFamily: FontStyles.poppins,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            SizedBox(
+              height: 10,
             ),
             Align(
               alignment: Alignment.centerRight,
@@ -142,20 +91,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   onTap: () {},
                   child: const Text("Forgot Password?",
                       style: TextStyle(
-                        color: Color(0xff6A707C),
+                        color: Color.fromARGB(255, 59, 89, 63),
                         fontSize: 15,
                       )),
                 ),
               ),
             ),
-            CustomButton(
-              isloaidng: false,
-              onPressed: () {
-                FocusScope.of(context).unfocus();
-                logincontroller.signin();
-              },
-              text: "Login",
-            ),
+            Obx(() => CustomButton(
+                  isLoading: logincontroller.isLoginLoading.value,
+                  onPressed: () {
+                    FocusScope.of(context).unfocus();
+                    logincontroller.loginUser(context);
+                  },
+                  text: "Login",
+                )),
             SizedBox(
               height: 30,
             ),
@@ -176,6 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       'OR',
                       textAlign: TextAlign.center,
                       style: TextStyle(
+                        color: mainColor,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
@@ -195,7 +145,8 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Text(
                   "Don't have an account? ",
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                      fontSize: 14, color: Color.fromARGB(255, 59, 89, 63)),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -206,8 +157,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Text(
                     "Register",
                     style: TextStyle(
-                      fontSize: 22,
-                      color: Color.fromARGB(255, 243, 124, 33),
+                      fontSize: 20,
+                      color: Color.fromARGB(255, 55, 116, 92),
                       fontWeight: FontWeight.bold,
                     ),
                   ),

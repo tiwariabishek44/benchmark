@@ -1,5 +1,6 @@
 import 'package:benchmark/app/config/color.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 extension ResponsiveSize on int {
   double get r => this * 1.0; // Replace this with your responsive calculation
@@ -36,7 +37,7 @@ class CustomTextForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 16.r),
+      padding: EdgeInsets.only(bottom: 1.5.h),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
@@ -55,6 +56,7 @@ class CustomTextForm extends StatelessWidget {
             decoration: InputDecoration(
               suffixIcon: suffixIcon,
               labelText: labelText,
+              labelStyle: TextStyle(fontSize: 16),
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 12.r, vertical: 14.r),
               border: OutlineInputBorder(
@@ -65,7 +67,7 @@ class CustomTextForm extends StatelessWidget {
                   borderSide: BorderSide(color: Colors.grey.shade500)),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide(color: primaryColor)),
+                  borderSide: BorderSide(color: mainColor)),
             ),
           ),
         ),

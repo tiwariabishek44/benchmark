@@ -1,12 +1,17 @@
 import 'dart:async';
 
 import 'package:benchmark/app/config/color.dart';
+import 'package:benchmark/app/config/prefs.dart';
+import 'package:benchmark/app/modules/common/login/login_controller.dart';
 import 'package:benchmark/app/modules/common/login/login_page.dart';
 import 'package:benchmark/app/modules/common/loginoption/login_option_view.dart';
 import 'package:benchmark/app/modules/student_view/homepage.dart/homepage.dart';
+import 'package:benchmark/app/modules/teacher_view/homepage.dart/homepage.dart';
+import 'package:benchmark/app/modules/student_view/student_main_screen/user_main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -14,6 +19,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final storage = GetStorage();
+  final loginController = Get.put(LoginController());
   @override
   void initState() {
     super.initState();
@@ -22,23 +29,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigateBasedOnAuthState() {
     Timer(const Duration(seconds: 3), () {
-      {
-        Get.offAll(() => Homepage());
+      if (loginController.isLogedIn()) {
+        // User is authenticated, navigate to UserMainScreen
+        if (storage.read(userType) == 'teacher') {
+          Get.offAll(() => TeacherHomePage());
+        } else {
+          Get.offAll(() => UserMainScreenView());
+        }
+      } else {
+        // User is not authenticated, navigate to LoginScreen
+        Get.offAll(() => UserMainScreenView());
       }
     });
-    // Timer(const Duration(seconds: 3), () {
-    //   if (storage.read('vendor') == '4455') {
-    //     Get.offAll(() => VendorMainScreenView());
-    //   } else {
-    //     if (logincontroller.user.value != null) {
-    //       // User is authenticated, navigate to UserMainScreen
-    //       Get.offAll(() => UserMainScreenView());
-    //     } else {
-    //       // User is not authenticated, navigate to LoginScreen
-    //       Get.offAll(() => LoginOptionView());
-    //     }
-    //   }
-    // });
   }
 
   @override
@@ -69,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             SpinKitFadingCircle(
-              color: const Color.fromARGB(255, 44, 105, 46),
+              color: mainColor,
             )
           ],
         ),

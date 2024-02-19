@@ -1,178 +1,191 @@
-import 'dart:developer';
-
 import 'package:benchmark/app/config/color.dart';
-import 'package:benchmark/app/config/fonts.dart';
-import 'package:benchmark/app/config/prefs.dart';
-import 'package:benchmark/app/modules/common/login/login_page.dart';
-import 'package:benchmark/app/modules/common/loginoption/login_option_view.dart';
-import 'package:benchmark/app/modules/student_view/app_setting/app_setting.dart';
-import 'package:benchmark/app/modules/student_view/buy_physical_items/buying_page.dart';
-import 'package:benchmark/app/modules/student_view/homepage.dart/homepage_controller.dart';
-import 'package:benchmark/app/widgets/category.dart';
-import 'package:benchmark/app/widgets/subject_List.dart';
-import 'package:benchmark/app/widgets/welcome_heading.dart';
+import 'package:benchmark/app/config/constants.dart';
+import 'package:benchmark/app/modules/common/buy_physical_items/item_list_view.dart';
+import 'package:benchmark/app/modules/common/login/login_controller.dart';
+import 'package:benchmark/app/modules/common/all_Subject/note_controller.dart';
+import 'package:benchmark/app/modules/common/buy_physical_items/inquary_page.dart';
+
+import 'package:benchmark/app/widgets/switch_case_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Homepage extends StatelessWidget {
-  Homepage({Key? key});
+  Homepage({super.key});
+  final loginController = Get.put(LoginController());
   final storage = GetStorage();
-  final subjectController = Get.put(SubjectController());
-
+  final noteContorller = Get.put(NoteController());
+  bool isPurchased = false; // Initialize with the default value
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Top Section
-              Container(
-                height: 20.5.h,
-                decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 55, 116, 92),
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(40),
-                        bottomRight: Radius.circular(40))),
-                padding: EdgeInsets.only(top: 26.0, left: 10, right: 10),
+      backgroundColor: whiteColor,
+      body: Flex(
+        direction: Axis.vertical,
+        children: [
+          // First Expanded Container (Flex 3)
+          Expanded(
+            flex: 3,
+            child: Container(
+              color: mainColor,
+              child: Padding(
+                padding: AppPadding.screenHorizontalPadding,
                 child: Column(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // Left half with "Benchmark"
-
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      Container(
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Hi Guest,',
-                                // Centers text within the container
-                                style: TextStyle(
-                                  color: whiteColor,
-                                  fontFamily: FontStyles.poppins,
-                                  fontSize:
-                                      23.sp, // Use screenutil for font sizing
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Hi ${loginController.isLogedIn() ? 'Abishek ,' : 'Guest ,'}",
+                                    style: TextStyle(
+                                        color: whiteColor,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "Let's Start Learning",
+                                    style: TextStyle(
+                                        color: whiteColor,
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                "Let's Start Learning",
-                                style: TextStyle(
-                                  color: whiteColor,
-                                  fontSize:
-                                      17.sp, // Use screenutil for font sizing
-                                ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(() => PhysicalItemView(),
+                                      transition: Transition.rightToLeft,
+                                      duration: duration);
+                                },
+                                child: Container(
+                                    height: 45,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: backgroundColor,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(6.0),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.shopping_cart_outlined,
+                                            color: mainColor,
+                                          ),
+                                          Text(
+                                            "Book/Notes",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: mainColor),
+                                          )
+                                        ],
+                                      ),
+                                    )),
                               ),
                             ],
-                          ),
-                          // Right top corner login button with curved edge boundary
-                          storage.read(isLogin) != 'isLogin'
-                              ? Padding(
-                                  padding: const EdgeInsets.all(9.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors
-                                            .white), // Change color as needed
-                                    child: TextButton(
-                                      onPressed: () {
-                                        Get.to(() => LoginOptionView(),
-                                            transition: Transition.leftToRight);
-                                        // Add your login button logic here
-                                      },
-                                      child: const Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8.0),
-                                        child: Text(
-                                          'Login',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Color.fromARGB(
-                                                  255, 64, 59, 59)),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: whiteColor,
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    child: IconButton(
-                                        onPressed: () {
-                                          // dashboardcontroller.fetchAllProduct();
-                                          // UserProductController().fetchUserProdcut();
-                                          Get.to(() => AppSettings(),
-                                              transition:
-                                                  Transition.leftToRight);
-                                        },
-                                        icon: Icon(
-                                          Icons.settings,
-                                          color: blackColor,
-                                          size: 19.sp,
-                                        )),
-                                  ),
-                                ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                          )),
+                      gapH32,
+                      Obx(
+                        () => Container(
+                          height: 5.7.h,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 195, 212, 195),
+                              borderRadius: BorderRadius.circular(30)),
+                          child: Row(children: [
+                            Expanded(
+                              child: GestureDetector(
+                                  onTap: () {
+                                    noteContorller.selectedTopic.value = 0;
+                                  },
+                                  child: selectedTopics(
+                                      'Streams',
+                                      noteContorller.selectedTopic.value == 0
+                                          ? whiteColor
+                                          : Colors.transparent,
+                                      noteContorller.selectedTopic.value == 0
+                                          ? mainColor
+                                          : blackColor)),
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                  onTap: () {
+                                    noteContorller.selectedTopic.value = 1;
+                                  },
+                                  child: selectedTopics(
+                                      "MCQ's",
+                                      noteContorller.selectedTopic.value == 1
+                                          ? whiteColor
+                                          : Colors.transparent,
+                                      noteContorller.selectedTopic.value == 1
+                                          ? mainColor
+                                          : blackColor)),
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                  onTap: () {
+                                    noteContorller.selectedTopic.value = 2;
+                                  },
+                                  child: selectedTopics(
+                                      'Recent',
+                                      noteContorller.selectedTopic.value == 2
+                                          ? whiteColor
+                                          : Colors.transparent,
+                                      noteContorller.selectedTopic.value == 2
+                                          ? mainColor
+                                          : blackColor)),
+                            ),
+                          ]),
+                        ),
+                      )
+                    ]),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              // GridView with 5 containers
+            ),
+          ),
 
-              CategoryWidget(),
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0, top: 10, bottom: 10),
-                child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Container(
-                    child: Text(
-                      "All Subject",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+          // Second Expanded Container (Flex 7)
+          Expanded(
+            flex: 7,
+            child: Obx(() => Container(
+                  decoration: const BoxDecoration(
+                    color: backgroundColor,
+                  ),
+                  width: double.infinity,
+                  child: Padding(
+                    padding: AppPadding.screenHorizontalPadding,
+                    child: SwitchCaseWidget(
+                      selectedTopic: noteContorller.selectedTopic.value,
                     ),
                   ),
-                ),
-              ),
-
-              // Replace the Expanded with a ListView.builder
-              SubjectList(),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
-              )
-            ],
+                )),
           ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        splashColor: Colors.amber,
-        backgroundColor: Colors.amber,
-        onPressed: () {
-          Get.to(() => BuyingPage(), transition: Transition.leftToRight);
-          // Add your onPressed action here
-          // This is the action that will be performed when the button is clicked
-        },
-        icon: Icon(Icons.shopping_cart),
-        label: Text(
-          'Buy Book/Notes',
-          style: TextStyle(fontSize: 12),
-        ),
+        ],
       ),
     );
+  }
+
+  Widget selectedTopics(String label, Color backgroundColor, Color textColor) {
+    return Container(
+        height: 5.7.h,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30), color: backgroundColor),
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(
+              color: textColor,
+              fontSize: 17.sp,
+            ),
+          ),
+        ));
   }
 }
