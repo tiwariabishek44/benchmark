@@ -7,8 +7,6 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-// Disable screenshots and screen recording on Android
-
 void main() async {
   // Initialize the Nepali locale data
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,6 +1,6 @@
 import 'package:benchmark/app/config/color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CustomizedTextfield extends StatelessWidget {
   final TextEditingController? myController;
@@ -25,10 +25,20 @@ class CustomizedTextfield extends StatelessWidget {
         validator: validator,
         controller: myController,
         decoration: InputDecoration(
+          errorStyle: TextStyle(color: const Color.fromARGB(255, 4, 92, 7)),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            borderSide: BorderSide(
+              color: Color.fromARGB(255, 3, 175,
+                  92), // Use errorBorderColor if provided, otherwise fallback to default error color
+              width: 2.0,
+            ),
+          ),
+
           prefixIcon: Icon(
             icon,
             color: mainColor,
-            size: 30,
+            size: 21.5.sp,
           ),
 
           contentPadding: EdgeInsets.symmetric(

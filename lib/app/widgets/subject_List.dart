@@ -2,16 +2,16 @@ import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/constants.dart';
 import 'package:benchmark/app/config/fonts.dart';
 import 'package:benchmark/app/modules/common/all_Subject/all_subject_page.dart';
+import 'package:benchmark/app/modules/common/all_Subject/course_controller.dart';
 import 'package:benchmark/app/modules/common/all_Subject/subject_controller.dart';
 import 'package:benchmark/app/modules/common/all_Subject/note_controller.dart';
-import 'package:benchmark/app/widgets/batch_lable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class SubjectList extends StatelessWidget {
   SubjectList({Key? key});
-  final noteController = Get.put(NoteController());
+  final courseController = Get.put(CourseController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +27,11 @@ class SubjectList extends StatelessWidget {
         itemBuilder: (BuildContext ctx, index) {
           return InkWell(
             onTap: () {
+              courseController.fetchAllCourse();
+
               Get.to(
                   () => AllSubjectPage(
                         title: allStreams[index].name,
-                        subject: allStreams[index].subjects,
                       ),
                   duration: duration,
                   transition: Transition.rightToLeft);
@@ -57,8 +58,8 @@ class SubjectList extends StatelessWidget {
                                 fit: BoxFit.fill,
                                 image: AssetImage(allStreams[index].image)),
                             borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(15),
-                                topRight: Radius.circular(15))),
+                                topLeft: Radius.circular(8.0),
+                                topRight: Radius.circular(8.0))),
                       ),
                     ),
                     Padding(
@@ -77,12 +78,6 @@ class SubjectList extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const BatchLabel(
-                            iconColor: Colors.amber,
-                            iconData: Icons.book,
-                            labelText: '7 subject',
-                            textColor: blackColor,
-                          )
                         ],
                       ),
                     )

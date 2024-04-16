@@ -4,10 +4,11 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:benchmark/app/config/prefs.dart';
+import 'package:benchmark/app/services/http_client.dart';
+import 'package:benchmark/app/utils/token_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart' as http;
 
 class ApiClient {
   final storage = GetStorage();
@@ -19,27 +20,13 @@ class ApiClient {
     bool? isTokenRequired,
     T Function(dynamic json)? responseType,
   }) async {
-    Map<String, String> header;
-
-    if (isTokenRequired!) {
-      header = {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer ${storage.read(accessToken)}"
-      };
-    } else {
-      header = {
-        "Content-Type": "application/json",
-      };
-    }
-
     try {
-      log("-----INSIDE THE API CLIEN");
-      var apiUrl = Uri.parse(endPoint);
-      log("API CALL URL${apiUrl} AND HEADER ${requestBody}");
-
-      var response = await http.post(apiUrl,
-          body: jsonEncode(requestBody), headers: header);
-      log(response.statusCode.toString());
+      final response = await httpClient.post(Uri.parse(endPoint),
+          headers: {
+            'Content-Type':
+                'application/json', // Adjust content type if necessary
+          },
+          body: jsonEncode(requestBody));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final json = jsonDecode(response.body);
@@ -48,31 +35,37 @@ class ApiClient {
 
         return ApiResponse.completed(data);
       } else {
-        log("error");
-
+        log("error ${response.statusCode}");
         var message = "";
-        for (var key in jsonDecode(response.body).keys) {
-          log(key);
-          log("fdf: ${jsonDecode(response.body)[key]}");
-          if (response.statusCode == 400 || response.statusCode == 404) {
-            message = jsonDecode(response.body)[key];
-          } else {
-            for (var key1 in jsonDecode(response.body)[key].keys) {
-              log("fdshfkjd: ${jsonDecode(response.body)[key][key1][0]}");
-              // concatenate the value with comma separated
-              message += jsonDecode(response.body)[key][key1][0] + ", ";
+
+// Parse the response body
+        var responseBody = jsonDecode(response.body);
+
+// Check if the response contains a 'message' field
+        if (responseBody.containsKey('message')) {
+          message = responseBody['message'];
+        } else {
+          // If 'message' field is not present, handle other potential error structures
+          for (var key in responseBody.keys) {
+            if (response.statusCode == 400 || response.statusCode == 404) {
+              message = responseBody[key];
+            } else {
+              for (var key1 in responseBody[key].keys) {
+                // Concatenate the error message values with comma separation
+                message += responseBody[key][key1][0] + ", ";
+              }
             }
           }
         }
 
-        log(jsonDecode(response.body).keys.toString());
-
+// Log and return the error message
+        log("Error message: $message");
         return ApiResponse.error(message);
       }
     } on SocketException {
-      return ApiResponse.error("No Internet Connection");
+      return ApiResponse.error("Server Error");
     } catch (e) {
-      debugPrint(e.toString());
+      log(' THIS IS THE CATCH ERRROR ${e.toString()}');
       return ApiResponse.error("Something went wrong. Please try again later");
     }
   }
@@ -84,59 +77,46 @@ class ApiClient {
     bool? isTokenRequired,
     T Function(dynamic json)? responseType,
   }) async {
-    Map<String, String> header;
-
-    if (isTokenRequired!) {
-      header = {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer ${storage.read(accessToken)}"
-      };
-    } else {
-      header = {
-        "Content-Type": "application/json",
-      };
-    }
-
     try {
-      // log("-----TRYIN TO GET DATA FROM URL : ${endPoint}");
-      log("this is the get api call  ${endPoint}");
+      log("-----INSIDE THE API CLIENT  ${TokenManager.getAccessToken()} ");
+      log("\n-----INSIDE THE API CLIENT  ${TokenManager.getRefreshToken()} ");
 
-      final response = await http.get(Uri.parse(endPoint), headers: header);
-      debugPrint(response.statusCode.toString());
+      final response = await httpClient.get(Uri.parse(endPoint));
       if (response.statusCode == 200 || response.statusCode == 201) {
         final json = jsonDecode(response.body);
-        // log("GET REQUEST FROM URL : ${endPoint} IS : ${jsonDecode(response.body).toString()}");
-        // log("IT IS THE USER  DATA ${response.statusCode}, ${response.body}");
 
         final data = responseType != null ? responseType(json) : json as T;
 
         return ApiResponse.completed(data);
       } else {
-        log("error");
-
+        log("error ${response.statusCode}");
         var message = "";
-        for (var key in jsonDecode(response.body).keys) {
-          log(key);
-          log("fdf: ${jsonDecode(response.body)[key]}");
-          if (response.statusCode == 400 || response.statusCode == 404) {
-            message = jsonDecode(response.body)[key];
-          } else {
-            for (var key1 in jsonDecode(response.body)[key].keys) {
-              log("fdshfkjd: ${jsonDecode(response.body)[key][key1][0]}");
-              // concatenate the value with comma separated
-              message += jsonDecode(response.body)[key][key1][0] + ", ";
+
+        var responseBody = jsonDecode(response.body);
+
+        if (responseBody.containsKey('message')) {
+          message = responseBody['message'];
+        } else {
+          // If 'message' field is not present, handle other potential error structures
+          for (var key in responseBody.keys) {
+            if (response.statusCode == 400 || response.statusCode == 404) {
+              message = responseBody[key];
+            } else {
+              for (var key1 in responseBody[key].keys) {
+                // Concatenate the error message values with comma separation
+                message += responseBody[key][key1][0] + ", ";
+              }
             }
           }
         }
 
-        log(jsonDecode(response.body).keys.toString());
-
+// Log and return the error message
         return ApiResponse.error(message);
       }
     } on SocketException {
-      return ApiResponse.error("No Internet Connection");
+      return ApiResponse.error("Server Error");
     } catch (e) {
-      debugPrint(e.toString());
+      log(e.toString() + "hello from api_clien");
       return ApiResponse.error("Something went wrong. Please try again later");
     }
   }
@@ -151,11 +131,10 @@ class ApiClient {
       var header = {
         "Content-Type": "multipart/form-data",
         "Accept": "application/json",
-        "Authorization": "Bearer ${storage.read(accessToken)}"
+        "Authorization": "Bearer ${storage.read(accessTokenKey)}"
       };
-      log(" ------------THS IS HE  PUT api CALL");
 
-      var response = await http.put(
+      var response = await httpClient.put(
         Uri.parse(endPoint),
         headers: header,
         body: jsonEncode(requestBody),
@@ -168,11 +147,35 @@ class ApiClient {
 
         return ApiResponse.completed(data);
       } else {
-        final message = ApiMessage().getMessage(response.statusCode);
+        log("error ${response.statusCode}");
+        var message = "";
+
+// Parse the response body
+        var responseBody = jsonDecode(response.body);
+
+// Check if the response contains a 'message' field
+        if (responseBody.containsKey('message')) {
+          message = responseBody['message'];
+        } else {
+          // If 'message' field is not present, handle other potential error structures
+          for (var key in responseBody.keys) {
+            if (response.statusCode == 400 || response.statusCode == 404) {
+              message = responseBody[key];
+            } else {
+              for (var key1 in responseBody[key].keys) {
+                // Concatenate the error message values with comma separation
+                message += responseBody[key][key1][0] + ", ";
+              }
+            }
+          }
+        }
+
+// Log and return the error message
+        log("Error message: $message");
         return ApiResponse.error(message);
       }
     } on SocketException {
-      return ApiResponse.error("No Internet Connection");
+      return ApiResponse.error("Server Error");
     } catch (e) {
       debugPrint(e.toString());
       return ApiResponse.error("Something went wrong. Please try again later");

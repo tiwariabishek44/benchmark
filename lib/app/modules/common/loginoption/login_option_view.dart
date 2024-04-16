@@ -5,8 +5,6 @@ import 'package:benchmark/app/modules/common/loginoption/login_option_controller
 import 'package:benchmark/app/widgets/welcome_heading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class LoginOptionView extends StatelessWidget {
   final loginOptionController = Get.put(LoginOptionController());

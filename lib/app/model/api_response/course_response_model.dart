@@ -1,59 +1,30 @@
-class CourseResponse {
-  String id;
-  String name;
-  String description;
-  double price;
-  List<Note> notes;
+import 'package:benchmark/app/model/api_response/my_course_response.dart';
 
-  CourseResponse({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.price,
-    required this.notes,
+class CourseApiResponse {
+  bool? success;
+  List<Datum> data;
+  String? message;
+
+  CourseApiResponse({
+    this.success,
+    required this.data,
+    this.message,
   });
 
-  factory CourseResponse.fromJson(Map<String, dynamic> json) => CourseResponse(
-        id: json["_id"],
-        name: json["name"],
-        description: json["description"],
-        price: json["price"]?.toDouble(),
-        notes: List<Note>.from(json["notes"].map((x) => Note.fromJson(x))),
+  factory CourseApiResponse.fromJson(Map<String, dynamic> json) =>
+      CourseApiResponse(
+        success: json["success"],
+        data: json["data"] == null
+            ? []
+            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+        message: json["message"],
       );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "name": name,
-        "description": description,
-        "price": price,
-        "notes": List<dynamic>.from(notes.map((x) => x.toJson())),
-      };
-}
-
-class Note {
-  String title;
-  String courseName;
-  String pdfUrl;
-  String id;
-
-  Note({
-    required this.title,
-    required this.courseName,
-    required this.pdfUrl,
-    required this.id,
-  });
-
-  factory Note.fromJson(Map<String, dynamic> json) => Note(
-        title: json["title"],
-        courseName: json["courseName"],
-        pdfUrl: json["pdfUrl"],
-        id: json["_id"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "title": title,
-        "courseName": courseName,
-        "pdfUrl": pdfUrl,
-        "_id": id,
+        "success": success,
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "message": message,
       };
 }

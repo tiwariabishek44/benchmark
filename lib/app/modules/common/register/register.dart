@@ -4,6 +4,7 @@ import 'package:benchmark/app/config/fonts.dart';
 import 'package:benchmark/app/modules/common/loginoption/login_option_controller.dart';
 import 'package:benchmark/app/modules/common/register/register_controller.dart';
 import 'package:benchmark/app/widgets/custom_button.dart';
+import 'package:benchmark/app/widgets/custom_password_field.dart';
 import 'package:benchmark/app/widgets/customized_textfield.dart';
 import 'package:benchmark/app/widgets/welcome_heading.dart';
 import 'package:flutter/gestures.dart';
@@ -58,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           )),
                       SizedBox(height: 10),
                       CustomizedTextfield(
-                        validator: registercontroller.usernameValidator,
+                        validator: registercontroller.emailValidator,
                         icon: Icons.email_outlined,
                         myController: registercontroller.emailcontroller,
                         hintText: "Email",
@@ -76,145 +77,38 @@ class _RegisterPageState extends State<RegisterPage> {
                         hintText: "Name",
                       ),
                       gapH2,
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: const Text(
-                            'Select Stream',
-                            style: TextStyle(color: mainColor, fontSize: 15),
-                          ),
+                      Obx(
+                        () => CustomPasswordField(
+                          onPressed: () {
+                            registercontroller.isPasswordVisible.value =
+                                !registercontroller.isPasswordVisible.value;
+                          },
+                          validator: registercontroller.passwordValidator,
+                          controller: registercontroller.passwordcontroller,
+                          labelText: 'Password',
+                          icon: Icons.lock_outline,
+                          isVisible: registercontroller.isPasswordVisible
+                              .value, // or false based on your requirement
                         ),
                       ),
-                      Obx(() => Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 1, vertical: 3),
-                            child: Container(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              decoration: BoxDecoration(
-                                color: whiteColor,
-                                borderRadius: BorderRadius.circular(8.0),
-                                border: Border.all(color: mainColor),
-                              ),
-                              child: DropdownButton(
-                                isExpanded: true,
-                                iconSize: 36.0,
-                                iconEnabledColor: mainColor,
-                                elevation: 8,
-                                style: TextStyle(color: mainColor),
-                                underline: SizedBox(),
-                                value: registercontroller.selectedValue.value,
-                                items: ['Science', 'Management']
-                                    .map<DropdownMenuItem<String>>(
-                                      (String value) =>
-                                          DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      ),
-                                    )
-                                    .toList(),
-                                onChanged: (newValue) {
-                                  registercontroller
-                                      .updateSelectedValue(newValue!);
-                                },
-                              ),
-                            ),
-                          )),
-                      Obx(() => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: TextFormField(
-                              style: TextStyle(color: mainColor),
-                              validator: registercontroller.passwordValidator,
-                              controller: registercontroller.passwordcontroller,
-                              obscureText: registercontroller.isPasswordVisible
-                                  .value, // Toggle the visibility
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 15),
-                                prefixIcon: Icon(
-                                  Icons.lock_outline,
-                                  color: mainColor,
-                                ),
-                                labelText: 'Password',
-                                labelStyle: TextStyle(color: mainColor),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color: mainColor, width: 1),
-                                    borderRadius: BorderRadius.circular(10)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color: mainColor, width: 1),
-                                    borderRadius: BorderRadius.circular(10)),
-                                fillColor: Color.fromARGB(255, 255, 255, 255),
-                                filled: true,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    registercontroller.isPasswordVisible.value
-                                        ? Icons.visibility
-                                        : Icons.visibility_off_outlined,
-                                    color: mainColor,
-                                  ),
-                                  onPressed: () {
-                                    registercontroller.isPasswordVisible.value =
-                                        !registercontroller
-                                            .isPasswordVisible.value;
-                                  },
-                                ),
-                              ),
-                            ),
-                          )),
-                      Obx(() => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: TextFormField(
-                              style: TextStyle(color: mainColor),
-                              validator:
-                                  registercontroller.confirmPasswordValidator,
-                              controller:
-                                  registercontroller.confirmPasswordController,
-                              obscureText: registercontroller
-                                  .cornfirmPasswordVisible
-                                  .value, // Toggle the visibility
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 15),
-                                prefixIcon:
-                                    Icon(Icons.lock_outline, color: mainColor),
-                                labelText: 'Confirm Password',
-                                labelStyle: TextStyle(color: mainColor),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color: mainColor, width: 1),
-                                    borderRadius: BorderRadius.circular(10)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color: mainColor, width: 1),
-                                    borderRadius: BorderRadius.circular(10)),
-                                fillColor: Color.fromARGB(255, 255, 255, 255),
-                                filled: true,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                      registercontroller
-                                              .cornfirmPasswordVisible.value
-                                          ? Icons.visibility
-                                          : Icons.visibility_off_outlined,
-                                      color: mainColor),
-                                  onPressed: () {
-                                    registercontroller
-                                            .cornfirmPasswordVisible.value =
-                                        !registercontroller
-                                            .cornfirmPasswordVisible.value;
-                                  },
-                                ),
-                              ),
-                            ),
-                          )),
+                      Obx(
+                        () => CustomPasswordField(
+                          onPressed: () {
+                            registercontroller.cornfirmPasswordVisible.value =
+                                !registercontroller
+                                    .cornfirmPasswordVisible.value;
+                          },
+                          validator:
+                              registercontroller.confirmPasswordValidator,
+                          controller:
+                              registercontroller.confirmPasswordController,
+
+                          labelText: 'Confirm Password',
+                          icon: Icons.lock_outline,
+                          isVisible: registercontroller.cornfirmPasswordVisible
+                              .value, // or false based on your requirement
+                        ),
+                      ),
                       GestureDetector(
                         onTap: () {
                           registercontroller.termsAndConditions.value =
@@ -273,13 +167,14 @@ class _RegisterPageState extends State<RegisterPage> {
                           ],
                         ),
                       ),
-                      CustomButton(
-                        onPressed: () {
-                          registercontroller.registerUser(context);
-                        },
-                        text: 'Register',
-                        isLoading: registercontroller.isregisterLoading.value,
-                      ),
+                      Obx(() => CustomButton(
+                            onPressed: () {
+                              registercontroller.registerUser(context);
+                            },
+                            text: 'Register',
+                            isLoading:
+                                registercontroller.isregisterLoading.value,
+                          )),
                       const SizedBox(
                         height: 10,
                       ),

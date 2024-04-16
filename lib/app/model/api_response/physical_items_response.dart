@@ -1,31 +1,54 @@
-class PhysicalItemsResponse {
-  final String productId; // Unique identifier for the product
-  final String name;
-  final String image;
-  final double price;
+class Book {
+  final int? id;
+  final int? subjectId;
+  final String? name;
+  final String? description;
+  final String? fileLocation;
+  final String? price;
+  final String? bookType;
 
-  PhysicalItemsResponse({
-    required this.productId,
-    required this.name,
-    required this.image,
-    required this.price,
+  Book({
+    this.id,
+    this.subjectId,
+    this.name,
+    this.description,
+    this.fileLocation,
+    this.price,
+    this.bookType,
   });
 
-  factory PhysicalItemsResponse.fromJson(Map<String, dynamic> json) {
-    return PhysicalItemsResponse(
-      productId: json['productId'] ?? "",
-      name: json['name'] ?? "",
-      image: json['image'] ?? "",
-      price: json['price']?.toDouble() ?? 0.0,
+  factory Book.fromJson(Map<String, dynamic> json) {
+    return Book(
+      id: json['id'] as int?,
+      subjectId: json['subjectId'] as int?,
+      name: json['name'] as String?,
+      description: json['description'] as String?,
+      fileLocation: json['fileLocation'] as String?,
+      price: json['price'] as String?,
+      bookType: json['bookType'] as String?,
     );
   }
+}
 
-  Map<String, dynamic> toJson() {
-    return {
-      'productId': productId,
-      'name': name,
-      'image': image,
-      'price': price,
-    };
+class PhysicalItemApiResponse {
+  final bool? success;
+  final List<Book> data;
+  final String message;
+
+  PhysicalItemApiResponse({
+    this.success,
+    required this.data,
+    required this.message,
+  });
+
+  factory PhysicalItemApiResponse.fromJson(Map<String, dynamic> json) {
+    return PhysicalItemApiResponse(
+      success: json['success'] as bool?,
+      data: (json['data'] as List<dynamic>?)
+              ?.map((item) => Book.fromJson(item as Map<String, dynamic>))
+              .toList() ??
+          [],
+      message: json['message'] as String? ?? '',
+    );
   }
 }

@@ -1,54 +1,23 @@
-class InquiryResponse {
-  List<Inquiry>? courseBuy;
+class InquryResponse {
+  bool? success;
+  String? data;
+  String? message;
 
-  InquiryResponse({
-    this.courseBuy,
+  InquryResponse({
+    this.success,
+    this.data,
+    this.message,
   });
 
-  InquiryResponse.fromJson(List<dynamic> json) {
-    if (json.isNotEmpty) {
-      courseBuy = json.map((e) => Inquiry.fromJson(e)).toList();
-    }
-  }
-}
-
-class Inquiry {
-  int? id;
-  String? uuid;
-  String? userId;
-  DateTime? buyDate;
-  String? amount;
-  String? courseId;
-  String? courseName;
-
-  Inquiry({
-    this.id,
-    this.uuid,
-    this.userId,
-    this.buyDate,
-    this.amount,
-    this.courseId,
-    this.courseName,
-  });
-
-  factory Inquiry.fromJson(Map<String, dynamic> json) => Inquiry(
-        id: json['id'],
-        uuid: json['uuid'],
-        userId: json['userId'],
-        buyDate:
-            json['buyDate'] != null ? DateTime.parse(json['buyDate']) : null,
-        amount: json['amount'],
-        courseId: json['courseId'],
-        courseName: json['courseName'],
+  factory InquryResponse.fromJson(Map<String, dynamic> json) => InquryResponse(
+        success: json["success"],
+        data: json["data"],
+        message: json["message"],
       );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'uuid': uuid,
-        'userId': userId,
-        'buyDate': buyDate?.toIso8601String(),
-        'amount': amount,
-        'courseId': courseId,
-        'courseName': courseName,
+        "success": success,
+        "data": data,
+        "message": message,
       };
 }

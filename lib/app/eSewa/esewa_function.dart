@@ -2,8 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:benchmark/app/config/eSewa.dart';
-import 'package:benchmark/app/modules/student_view/note_list/purchase_controller.dart';
-import 'package:benchmark/app/widgets/custom_snackbar.dart';
+import 'package:benchmark/app/modules/common/note_list/purchase_controller.dart';
 import 'package:esewa_flutter_sdk/esewa_config.dart';
 import 'package:esewa_flutter_sdk/esewa_flutter_sdk.dart';
 import 'package:esewa_flutter_sdk/esewa_payment.dart';
@@ -14,7 +13,7 @@ import 'package:http/http.dart' as http;
 
 class Esewa {
   final purchaseController = Get.put(PurchaseControler());
-  pay() {
+  pay(String courseId, String price, String courseName) {
     try {
       EsewaFlutterSdk.initPayment(
         esewaConfig: EsewaConfig(
@@ -23,16 +22,12 @@ class Esewa {
           secretId: kEsewaSecretKey,
         ),
         esewaPayment: EsewaPayment(
-          productId: "1d71jd81",
-          productName: 'productName',
-          productPrice: '200',
+          productId: courseId,
+          productName: courseName,
+          productPrice: price,
         ),
         onPaymentSuccess: (EsewaPaymentSuccessResult result) {
-          log(result.toString());
-
-          verify(
-            result,
-          );
+          verify(result, courseId, price);
         },
         onPaymentFailure: () {
           debugPrint('FAILURE');
@@ -46,7 +41,7 @@ class Esewa {
     }
   }
 
-  Future<void> verify(result) async {
+  Future<void> verify(result, String courseId, String amount) async {
     try {
       String basicAuth =
           'Basic ${base64.encode(utf8.encode('JB0BBQ4aD0UqIThFJwAKBgAXEUkEGQUBBAwdOgABHD4DChwUAB0R:BhwIWQQADhIYSxILExMcAgFXFhcOBwAKBgAXEQ=='))}';
@@ -63,13 +58,8 @@ class Esewa {
       http.Response response = await http.get(finalUri, headers: headers);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        log("--------------${response.body}");
-        // purchaseController.buyCourse();
-      } else {
-        // Handle other status codes if needed
+        purchaseController.buyCourse(courseId: courseId, amount: amount);
       }
-
-      log(response.statusCode.toString());
     } catch (e) {
       print(e);
     }

@@ -9,7 +9,7 @@ class UserRegisterRepository {
   Future<ApiResponse<RegisterResponseModel>> registerUser(requesBody) async {
     log(" INSIDE THE rEGISTER REPOSITORY");
     final response = await ApiClient().postApi<RegisterResponseModel>(
-      ApiEndpoints.userRegister,
+      ApiEndpoints.registerPhase1,
       requestBody: requesBody,
       isTokenRequired: false,
       responseType: (json) => RegisterResponseModel.fromJson(json),

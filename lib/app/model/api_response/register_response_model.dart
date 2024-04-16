@@ -1,48 +1,46 @@
-class RegisterResponseModel {
-  String name;
-  String email;
-  String password;
-  String phone;
-  String userType;
-  bool isVerified;
-  String token;
-  String stream;
-  String id;
+// To parse this JSON data, do
+//
+//     final registerPhase1Response = registerPhase1ResponseFromJson(jsonString);
 
-  RegisterResponseModel({
-    required this.name,
-    required this.email,
-    required this.password,
-    required this.phone,
-    required this.userType,
-    required this.isVerified,
-    required this.token,
-    required this.stream,
-    required this.id,
+import 'dart:convert';
+
+class RegisterResponseModel {
+  bool? success;
+  Data? data;
+  String? message;
+
+  RegisterResponseModel.RegisterPhase1Response({
+    this.success,
+    this.data,
+    this.message,
   });
 
   factory RegisterResponseModel.fromJson(Map<String, dynamic> json) =>
-      RegisterResponseModel(
-        name: json["name"],
-        email: json["email"],
-        password: json["password"],
-        phone: json["phone"],
-        userType: json["userType"],
-        isVerified: json["isVerified"],
-        token: json["token"],
-        stream: json["stream"],
-        id: json["_id"],
+      RegisterResponseModel.RegisterPhase1Response(
+        success: json["success"],
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        message: json["message"],
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "email": email,
-        "password": password,
-        "phone": phone,
-        "userType": userType,
-        "isVerified": isVerified,
-        "token": token,
-        "stream": stream,
-        "_id": id,
+        "success": success,
+        "data": data?.toJson(),
+        "message": message,
+      };
+}
+
+class Data {
+  String? otpToken;
+
+  Data({
+    this.otpToken,
+  });
+
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+        otpToken: json["otpToken"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "otpToken": otpToken,
       };
 }

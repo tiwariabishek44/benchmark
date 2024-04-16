@@ -12,12 +12,14 @@ import 'package:benchmark/app/widgets/pop_up_logout.dart';
 import 'package:benchmark/app/widgets/profile_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
   final loginController = Get.put(LoginController());
   final profileController = Get.put(ProfileController());
+  final storage = GetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -50,49 +52,15 @@ class ProfilePage extends StatelessWidget {
                   height: 2.h,
                 ),
                 Text(
-                  "Abishek Tiwari",
+                  storage.read('userName'),
                   style: AppStyles.mainHeading,
                 ),
                 Text(
-                  "tiwariabishek44@gmail.com",
+                  storage.read('email'),
                   style: AppStyles.subtitleStyle,
                 ),
                 const SizedBox(
                   height: 20,
-                ),
-                ProfileTile(
-                  onTap: () {
-                    final userData = GetUserDataResponse(
-                        id: 22992,
-                        name: 'Abishek tiwari',
-                        mobileNumber: '9742555741',
-                        password: 'tttttttttt',
-                        email: 'tiwariabishek44@gmail.com',
-                        address: 'chabahil Kathmandu');
-
-                    //-----------to pass the original user data-------
-                    profileController.udateUserData(userData);
-                    Get.to(() => EditProfilePage(),
-                        transition: Transition.rightToLeft, duration: duration);
-                  },
-                  title: "Edit Profile",
-                  leadingIcon: const Icon(Icons.person_outline),
-                ),
-                ProfileTile(
-                  onTap: () {
-                    Get.to(() => ChangePasswordPage(),
-                        transition: Transition.rightToLeft, duration: duration);
-                  },
-                  title: "Change Password",
-                  leadingIcon: const Icon(Icons.lock_outline),
-                ),
-                ProfileTile(
-                  onTap: () {
-                    Get.to(() => const AllTransctionPage(),
-                        transition: Transition.rightToLeft, duration: duration);
-                  },
-                  title: "All Transctions",
-                  leadingIcon: const Icon(Icons.trending_up),
                 ),
                 ProfileTile(
                   onTap: () {
@@ -156,11 +124,13 @@ class ProfilePage extends StatelessWidget {
                 ),
                 ProfileTile(
                   onTap: () {
-                    Get.to(LoginOptionView());
+                    Get.to(
+                      () => LoginOptionView(),
+                    );
                   },
                   title: "Login",
                   leadingIcon: const Icon(
-                    Icons.logout,
+                    Icons.login,
                   ),
                 )
               ]),

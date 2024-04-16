@@ -3,11 +3,9 @@ import 'dart:async';
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/prefs.dart';
 import 'package:benchmark/app/modules/common/login/login_controller.dart';
-import 'package:benchmark/app/modules/common/login/login_page.dart';
-import 'package:benchmark/app/modules/common/loginoption/login_option_view.dart';
-import 'package:benchmark/app/modules/student_view/homepage.dart/homepage.dart';
-import 'package:benchmark/app/modules/teacher_view/homepage.dart/homepage.dart';
+import 'package:benchmark/app/modules/common/homepage.dart/homepage.dart';
 import 'package:benchmark/app/modules/student_view/student_main_screen/user_main_screen.dart';
+import 'package:benchmark/app/widgets/account_verificaiton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -24,6 +22,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    // loginController.logout();
+
     navigateBasedOnAuthState();
   }
 
@@ -31,14 +31,16 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 3), () {
       if (loginController.isLogedIn()) {
         // User is authenticated, navigate to UserMainScreen
-        if (storage.read(userType) == 'teacher') {
-          Get.offAll(() => TeacherHomePage());
+        if (storage.read(userType) == 'TEACHER') {
+          storage.read(accoutnType)
+              ? Get.offAll(() => TeacherHomePage())
+              : Get.off(() => VerificationPage());
         } else {
-          Get.offAll(() => UserMainScreenView());
+          Get.offAll(() => StudentMainScreenView());
         }
       } else {
         // User is not authenticated, navigate to LoginScreen
-        Get.offAll(() => UserMainScreenView());
+        Get.offAll(() => TeacherHomePage());
       }
     });
   }

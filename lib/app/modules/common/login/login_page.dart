@@ -1,12 +1,11 @@
+import 'package:benchmark/app/config/app_style.dart';
 import 'package:benchmark/app/config/color.dart';
-import 'package:benchmark/app/config/fonts.dart';
+import 'package:benchmark/app/modules/common/forget_password/forget_password_page.dart';
 import 'package:benchmark/app/modules/common/login/login_controller.dart';
 import 'package:benchmark/app/modules/common/register/register.dart';
-import 'package:benchmark/app/modules/student_view/homepage.dart/homepage.dart';
 import 'package:benchmark/app/widgets/custom_button.dart';
+import 'package:benchmark/app/widgets/custom_password_field.dart';
 import 'package:benchmark/app/widgets/customized_textfield.dart';
-import 'package:benchmark/app/widgets/welcome_heading.dart';
-import 'package:flutter/gestures.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,8 +18,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final logincontroller = Get.put(LoginController());
-
-  bool _isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,57 +35,36 @@ class _LoginScreenState extends State<LoginScreen> {
               validator: logincontroller.emailValidator,
               icon: Icons.email_outlined,
               myController: logincontroller.emailcontroller,
-              hintText: "Email",
+              hintText: "Enter Email",
             ),
-            SizedBox(height: 10),
-            TextFormField(
-              style: TextStyle(color: mainColor),
-              validator: logincontroller.passwordValidator,
-              controller: logincontroller.passwordcontroller,
-              obscureText: !_isPasswordVisible,
-              decoration: InputDecoration(
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                prefixIcon: Icon(Icons.lock_outline, color: mainColor),
+            SizedBox(height: 0.6.h),
+            Obx(
+              () => CustomPasswordField(
+                onPressed: () {
+                  logincontroller.isPasswordVisible.value =
+                      !logincontroller.isPasswordVisible.value;
+                },
+                validator: logincontroller.passwordValidator,
+                controller: logincontroller.passwordcontroller,
+
                 labelText: 'Password',
-                labelStyle: TextStyle(color: mainColor),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: mainColor, width: 1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: mainColor, width: 1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                fillColor: Color.fromARGB(255, 255, 255, 255),
-                filled: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _isPasswordVisible
-                        ? Icons.visibility
-                        : Icons.visibility_off_outlined,
-                    color: mainColor,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isPasswordVisible = !_isPasswordVisible;
-                    });
-                  },
-                ),
+                icon: Icons.lock_outline,
+                isVisible: logincontroller.isPasswordVisible
+                    .value, // or false based on your requirement
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 1.h,
             ),
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(() => ForgetPasswordPage(),
+                        transition: Transition.rightToLeft, duration: duration);
+                  },
                   child: const Text("Forgot Password?",
                       style: TextStyle(
                         color: Color.fromARGB(255, 59, 89, 63),
@@ -98,9 +74,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Obx(() => CustomButton(
+                  key: Key("loginButton"),
                   isLoading: logincontroller.isLoginLoading.value,
                   onPressed: () {
-                    FocusScope.of(context).unfocus();
                     logincontroller.loginUser(context);
                   },
                   text: "Login",
@@ -150,14 +126,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => RegisterPage());
-                    // Handle navigation to registration page
-                    // For example, Navigator.push(context, MaterialPageRoute(builder: (context) => YourRegistrationPage()));
+                    Get.to(() => RegisterPage(),
+                        transition: Transition.rightToLeft, duration: duration);
                   },
                   child: Text(
                     "Register",
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18.sp,
                       color: Color.fromARGB(255, 55, 116, 92),
                       fontWeight: FontWeight.bold,
                     ),

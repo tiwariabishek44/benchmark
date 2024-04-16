@@ -56,7 +56,6 @@ class ProfileController extends GetxController {
         updateUserDataResponse.value =
             ApiResponse<UdpateUserDataResponse>.completed(
                 updateDataResult.response);
-        loginController.getUserData();
         CustomSnackBar.showSuccess("User update success");
 
         Get.back();

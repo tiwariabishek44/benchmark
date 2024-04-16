@@ -8,35 +8,57 @@ import 'package:benchmark/app/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class BuyItemController extends GetxController {
+class PhysicalItemController extends GetxController {
   var selectedOption = ' '.obs;
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   final bookController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
-  var isLoading = false.obs;
-
+  var isMcqLoading = false.obs;
+  var isloded = false.obs;
   //--------------Get physical items------------------
 
-  final physicalItemsRepository = Get.put(GetPhysicalItemsRepository());
-  final Rx<ApiResponse<PhysicalItemsResponse>> itemsResponse =
-      ApiResponse<PhysicalItemsResponse>.initial().obs;
+  final physicalItemRepository = Get.put(PhysicalItemRepository());
+  final Rx<ApiResponse<PhysicalItemApiResponse>> physicalItemresponse =
+      ApiResponse<PhysicalItemApiResponse>.initial().obs;
+
+  @override
+  void onInit() async {
+    super.onInit();
+    isloded(false);
+    getPhysicalItems();
+    log("-------physicalItmes  controler initilize");
+  }
 
   Future<void> getPhysicalItems() async {
     try {
-      itemsResponse.value = ApiResponse<PhysicalItemsResponse>.loading();
-      final itemsResult = await physicalItemsRepository.getPhysicalItems();
-      if (itemsResult.status == ApiStatus.SUCCESS) {
-        log(" ----Items FETCH SUCCESFULL");
+      isloded(false);
 
-        itemsResponse.value =
-            ApiResponse<PhysicalItemsResponse>.completed(itemsResult.response);
+      isMcqLoading(true);
+      physicalItemresponse.value =
+          ApiResponse<PhysicalItemApiResponse>.loading();
+      final itemsResult = await physicalItemRepository.getPhysicalItems();
+      if (itemsResult.status == ApiStatus.SUCCESS) {
+        physicalItemresponse.value =
+            ApiResponse<PhysicalItemApiResponse>.completed(
+                itemsResult.response);
+        log("this is the length " +
+            physicalItemresponse.value.response!.data.length.toString());
+
+        if (physicalItemresponse.value.response!.data.length != 0) {
+          isloded(true);
+        }
+        isMcqLoading(false);
       } else {
-        CustomSnackBar.showFailure('Some Thing went wrong');
-        isLoading(false);
+        CustomSnackBar.showFailure('${itemsResult.message.toString()}');
+        log("${itemsResult.message}");
+        isloded(false);
+        isMcqLoading(false);
       }
     } catch (e) {
-      CustomSnackBar.showFailure('$e');
+      // CustomSnackBar.showFailure('$e');
+      log("${e.toString()}");
+
+      isMcqLoading(false);
     }
   }
 

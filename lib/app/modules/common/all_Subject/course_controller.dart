@@ -7,35 +7,40 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class CourseController extends GetxController {
-  final storage = GetStorage();
   var isLoading = false.obs;
-  var selectedTopics = 0.obs;
+  var loded = false.obs;
 
   final GetCourseRepository courseRepository = GetCourseRepository();
 
   @override
   void onInit() {
     super.onInit();
-    // Fetch data only if the list is empty
+    log("------COURSE CONTRLLER IS INITILIZE");
+    fetchAllCourse();
   }
 
-  final Rx<ApiResponse<CourseResponse>> courseResponse =
-      ApiResponse<CourseResponse>.initial().obs;
-  Future<void> fetchNotes(String courseName) async {
+  final Rx<ApiResponse<CourseApiResponse>> courseResponse =
+      ApiResponse<CourseApiResponse>.initial().obs;
+  Future<void> fetchAllCourse() async {
     try {
+      log('inside the course controller');
+      loded(false);
       isLoading(true);
-      for (int i = 0; i < 100; i++) {
-        log(i.toString());
-      }
-      courseResponse.value = ApiResponse<CourseResponse>.loading();
-      final courseResult = await courseRepository.getAllNotes(courseName);
+      courseResponse.value = ApiResponse<CourseApiResponse>.loading();
+      final courseResult = await courseRepository.getallCourse();
       if (courseResult.status == ApiStatus.SUCCESS) {
         courseResponse.value =
-            ApiResponse<CourseResponse>.completed(courseResult.response);
-        log("succesfully fetch data ${courseResponse.value.response?.notes.toString()}");
+            ApiResponse<CourseApiResponse>.completed(courseResult.response);
+
+        log(" this are all the list of the course ${courseResponse.value.response!.data!.length}");
+
+        if (courseResponse.value.response!.data.isNotEmpty) {
+          loded(true);
+        }
+
         isLoading(false);
       } else {
-        courseResponse.value = ApiResponse<CourseResponse>.error(
+        courseResponse.value = ApiResponse<CourseApiResponse>.error(
             courseResult.message ?? 'Error during Login');
         isLoading(false);
       }

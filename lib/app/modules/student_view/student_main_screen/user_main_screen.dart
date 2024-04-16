@@ -2,22 +2,23 @@ import 'dart:developer';
 
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/fonts.dart';
-import 'package:benchmark/app/modules/student_view/homepage.dart/homepage.dart';
+import 'package:benchmark/app/modules/common/homepage.dart/homepage.dart';
 import 'package:benchmark/app/modules/student_view/my_course/my_course_page.dart';
 import 'package:benchmark/app/modules/common/profile/profile_page.dart';
 import 'package:benchmark/app/modules/student_view/student_main_screen/user_screen_controller.dart';
+import 'package:benchmark/app/utils/token_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class UserMainScreenView extends StatelessWidget {
-  UserMainScreenView({Key? key});
+class StudentMainScreenView extends StatelessWidget {
+  StudentMainScreenView({Key? key});
 
   final userController = Get.put(UserScreenController());
+
   final List<Widget> pages = [
-    Homepage(),
+    TeacherHomePage(),
     MyCoursePage(),
-    ProfilePage(),
   ];
 
   @override
@@ -57,10 +58,6 @@ class UserMainScreenView extends StatelessWidget {
                     nonSelectedicon: Icons.shopping_cart_outlined,
                     icon: Icons.shopping_cart,
                     label: 'MyCourse'),
-                MyBottomNavigationBarItem(
-                    nonSelectedicon: Icons.settings_outlined,
-                    icon: Icons.settings,
-                    label: 'Settings'),
               ],
             ),
           ),

@@ -1,4 +1,10 @@
 import 'dart:developer';
+import 'dart:ffi';
+import 'package:benchmark/app/model/api_response/otp_response.dart';
+import 'package:benchmark/app/modules/common/login/login_page.dart';
+import 'package:benchmark/app/modules/common/loginoption/login_option_view.dart';
+import 'package:benchmark/app/modules/common/register/otp_verification.dart';
+import 'package:benchmark/app/repository/otp_verify_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:benchmark/app/model/api_response/register_response_model.dart';
 import 'package:benchmark/app/modules/common/loginoption/login_option_controller.dart';
@@ -23,6 +29,7 @@ class RegisterController extends GetxController {
   final registerFromkey = GlobalKey<FormState>();
   final isPasswordVisible = false.obs;
   final cornfirmPasswordVisible = false.obs;
+  var otpPin = ''.obs;
 
   var selectedValue =
       'Science'.obs; // This will hold the selected dropdown value
@@ -56,30 +63,34 @@ class RegisterController extends GetxController {
 
   Future<void> register(BuildContext context) async {
     try {
+      log(" this isthe ${loginOptionController.isUser.value ? "STUDENT" : "TEACHER"}");
+
       isregisterLoading(true);
       registerResponse.value = ApiResponse<RegisterResponseModel>.loading();
       final user = {
-        'name': namecontroller.value.text.trim(),
         "email": emailcontroller.value.text.trim(),
-        "phone": phonenocontroller.value.text.trim(),
+        "phoneNumber": phonenocontroller.value.text.trim(),
+        "name": namecontroller.value.text.trim(),
         "password": passwordcontroller.value.text.trim(),
-        "isVerified": loginOptionController.isUser.value ? true : false,
-        "userType": loginOptionController.isUser.value ? "student" : "teacher",
-        "stream": selectedValue.value.toString(),
+        "accountType":
+            loginOptionController.isUser.value ? "STUDENT" : "TEACHER",
+        "stream": ""
       };
-      log('-------------------------user data-------------');
+
       final registerResult = await registerRepository.registerUser(user);
-      // log(registerResult.status.toString());
+      // log('-------------------------user data-------------');
 
       if (registerResult.status == ApiStatus.SUCCESS) {
         registerResponse.value = ApiResponse<RegisterResponseModel>.completed(
             registerResult.response);
+        // log('-----s' + registerResult.status.toString());
         // Navigate to home page or perform necessary actions upon successful login
-        CustomSnackBar.showSuccess('User Register Success');
-        Get.back();
+        Get.to(() => OtpVerification(
+              token: registerResponse.value.response!.data!.otpToken.toString(),
+            ));
         isregisterLoading(false);
       } else {
-        CustomSnackBar.showSuccess('User Register Success');
+        CustomSnackBar.authShowFailure(registerResult.message.toString());
         isregisterLoading(false);
       }
     } catch (e) {
@@ -88,14 +99,63 @@ class RegisterController extends GetxController {
       log("thi is error $e");
     }
   }
+//----------------VERIFY OTP -----------
+
+  void verify(BuildContext context, String token) {
+    // log(otpPin.value + " this is the otp and token      ----" + token);
+    otpVerify(context, token);
+  }
+
+  final OtpVerifyRepository verifyRepository = OtpVerifyRepository();
+  final Rx<ApiResponse<OtpResponse>> otpResponse =
+      ApiResponse<OtpResponse>.initial().obs;
+
+  var isOtpVerify = false.obs;
+
+  Future<void> otpVerify(BuildContext context, String token) async {
+    try {
+      isOtpVerify(true);
+      otpResponse.value = ApiResponse<OtpResponse>.loading();
+      final user = {"otp": otpPin.value.toString(), "otpToken": token};
+
+      final verifyReult = await verifyRepository.verifyOtp(user);
+      log(verifyReult.status.toString());
+      // log('-------------------------user data-------------');
+
+      if (verifyReult.status == ApiStatus.SUCCESS) {
+        otpResponse.value =
+            ApiResponse<OtpResponse>.completed(verifyReult.response);
+        // log('-----s' + registerResult.status.toString());
+        // Navigate to home page or perform necessary actions upon successful login
+        Get.offAll(() => LoginOptionView());
+        CustomSnackBar.showSuccess("User Account Create ");
+
+        isOtpVerify(false);
+      } else {
+        CustomSnackBar.showSuccess(verifyReult.message.toString());
+        isOtpVerify(false);
+      }
+    } catch (e) {
+      isOtpVerify(false);
+
+      log("thi is error $e");
+    }
+  }
 
   String? usernameValidator(String? value) {
-    // if(fieldLostFocus == usernameController.hashCode)
     if (value == null || value.trim().isEmpty) {
       return 'This field is required';
     }
     if (value.trim().length < 4) {
       return 'Username must be at least 4 characters in length';
+    }
+    // Check if the username contains only alphanumeric characters
+    if (!RegExp(r'^[a-zA-Z0-9]+$').hasMatch(value)) {
+      return 'Username can only contain alphanumeric characters';
+    }
+    // Check for additional criteria (e.g., maximum length)
+    if (value.trim().length > 20) {
+      return 'Username cannot exceed 20 characters';
     }
     // Return null if the entered username is valid
     return null;
@@ -127,7 +187,7 @@ class RegisterController extends GetxController {
 
   String? confirmPasswordValidator(String? value) {
     if (value == null || value.isEmpty) {
-      return 'This field is required';
+      return 'Enter the Confirm Password';
     }
     if (value != passwordcontroller.value.text) {
       return 'Confimation password does not match the entered password';
@@ -141,11 +201,17 @@ class RegisterController extends GetxController {
       return 'Please enter a phone no';
     }
     if (value.length != 10) {
-      return 'Phone no must be  10 digits';
+      return 'Phone no must be 10 digits';
     }
-    // Check for additional criteria (e.g., at least one digit and one special character)
+    // Additional criteria (if needed) can be checked here
+    // For example, you can check if all characters are digits
 
-    return null; // Return null if the password meets the criteria
+    // Validate if all characters are digits
+    if (!value.runes.every((rune) => rune >= 48 && rune <= 57)) {
+      return 'Phone no must contain only digits';
+    }
+
+    return null; // Return null if the phone number meets the criteria
   }
 
   void clearTextControllers() {

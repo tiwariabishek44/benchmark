@@ -1,42 +1,54 @@
-class Mcq {
-  String id;
-  String title;
-  String streamName;
-  String pdfUrl;
+class Book {
+  final int? id;
+  final int? subjectId;
+  final String? name;
+  final String? description;
+  final String? fileLocation;
+  final String? price;
+  final String? bookType;
 
-  Mcq({
-    required this.id,
-    required this.title,
-    required this.streamName,
-    required this.pdfUrl,
+  Book({
+    this.id,
+    this.subjectId,
+    this.name,
+    this.description,
+    this.fileLocation,
+    this.price,
+    this.bookType,
   });
 
-  factory Mcq.fromJson(Map<String, dynamic> json) {
-    return Mcq(
-      id: json['_id'],
-      title: json['title'],
-      streamName: json['streamName'],
-      pdfUrl: json['pdfUrl'],
+  factory Book.fromJson(Map<String, dynamic> json) {
+    return Book(
+      id: json['id'] as int?,
+      subjectId: json['subjectId'] as int?,
+      name: json['name'] as String?,
+      description: json['description'] as String?,
+      fileLocation: json['fileLocation'] as String?,
+      price: json['price'] as String?,
+      bookType: json['bookType'] as String?,
     );
   }
 }
 
-class McqResponse {
-  String status;
-  List<Mcq> mcqs;
+class McqApiResponse {
+  final bool? success;
+  final List<Book> data;
+  final String message;
 
-  McqResponse({
-    required this.status,
-    required this.mcqs,
+  McqApiResponse({
+    this.success,
+    required this.data,
+    required this.message,
   });
 
-  factory McqResponse.fromJson(Map<String, dynamic> json) {
-    List<dynamic> mcqsList = json['mcqs'];
-    List<Mcq> mcqs = mcqsList.map((item) => Mcq.fromJson(item)).toList();
-
-    return McqResponse(
-      status: json['status'],
-      mcqs: mcqs,
+  factory McqApiResponse.fromJson(Map<String, dynamic> json) {
+    return McqApiResponse(
+      success: json['success'] as bool?,
+      data: (json['data'] as List<dynamic>?)
+              ?.map((item) => Book.fromJson(item as Map<String, dynamic>))
+              .toList() ??
+          [],
+      message: json['message'] as String? ?? '',
     );
   }
 }
