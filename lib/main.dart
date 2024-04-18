@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/widgets/custom_snackbar.dart';
 import 'package:benchmark/app/widgets/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
@@ -10,10 +13,10 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 void main() async {
   // Initialize the Nepali locale data
   WidgetsFlutterBinding.ensureInitialized();
-  // await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
 
-  //  // Initialize Firebase
   await GetStorage.init(); // Initialize GetStorage
+  await dotenv.load(fileName: ".env");
 
   runApp(MyApp());
 }
@@ -37,10 +40,10 @@ class _MyAppState extends State<MyApp> {
               title: 'BenchMark',
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
-                primaryColor: backgroundColor,
+                primaryColor: AppColors.backgroundColor,
                 appBarTheme: const AppBarTheme(
                   iconTheme: IconThemeData(color: Colors.black),
-                  color: backgroundColor, //<-- SEE HERE
+                  color: AppColors.backgroundColor, //<-- SEE HERE
                 ),
               ),
               // Check connectivity status to determine which screen to show

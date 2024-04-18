@@ -22,7 +22,7 @@ class EditProfilePage extends StatelessWidget {
           userData.mobileNumber.toString();
     }
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         centerTitle: true,
         title: const Text(

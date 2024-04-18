@@ -59,7 +59,7 @@ class CustomSnackBar {
           message,
           style: TextStyle(fontSize: 16.sp),
         ),
-        backgroundColor: mainColor,
+        backgroundColor: AppColors.mainColor,
         duration: Duration(seconds: 2),
         behavior: SnackBarBehavior.floating,
       ),

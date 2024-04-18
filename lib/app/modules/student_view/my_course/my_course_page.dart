@@ -1,12 +1,13 @@
 import 'package:benchmark/app/config/app_style.dart';
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/fonts.dart';
-import 'package:benchmark/app/modules/common/all_Subject/course_controller.dart';
-import 'package:benchmark/app/modules/common/all_Subject/note_controller.dart';
+import 'package:benchmark/app/modules/common/course/course_controller.dart';
+import 'package:benchmark/app/modules/common/note_list/note_controller.dart';
 import 'package:benchmark/app/modules/common/note_list/note_list.dart';
 import 'package:benchmark/app/modules/student_view/my_course/my_course_controller.dart';
 import 'package:benchmark/app/widgets/custom_app_bar.dart';
 import 'package:benchmark/app/widgets/loading_screen.dart';
+import 'package:benchmark/app/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
@@ -21,7 +22,7 @@ class MyCoursePage extends StatelessWidget {
   Widget build(BuildContext context) {
     mycourseController.getPurchaseCourse();
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(title: 'benchmark'),
       body: Padding(
         padding: AppPadding.screenHorizontalPadding,
@@ -34,7 +35,7 @@ class MyCoursePage extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
-                      color: mainColor),
+                      color: AppColors.mainColor),
                 )),
             SizedBox(
               height: 3.h,
@@ -97,7 +98,7 @@ class MyCoursePage extends StatelessWidget {
                                         Expanded(
                                           child: Container(
                                             decoration: BoxDecoration(
-                                                color: greyColor,
+                                                color: AppColors.greyColor,
                                                 image: DecorationImage(
                                                     fit: BoxFit.fill,
                                                     image: AssetImage(
@@ -124,7 +125,7 @@ class MyCoursePage extends StatelessWidget {
                                                 textAlign: TextAlign
                                                     .center, // Centers text within the container
                                                 style: TextStyle(
-                                                  color: mainColor,
+                                                  color: AppColors.mainColor,
                                                   fontFamily:
                                                       FontStyles.poppins,
                                                   fontSize: 17
@@ -140,7 +141,10 @@ class MyCoursePage extends StatelessWidget {
                               );
                             }));
                   } else {
-                    return Text(" you havent purchase any course");
+                    return NoDataWidget(
+                      iconData: Icons.book,
+                      message: "You haven't purchase any course",
+                    );
                   }
                 }
               },

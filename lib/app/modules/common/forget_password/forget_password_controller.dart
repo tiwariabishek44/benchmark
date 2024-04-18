@@ -1,9 +1,10 @@
 import 'dart:developer';
 
+import 'package:benchmark/app/config/app_style.dart';
 import 'package:benchmark/app/model/api_response/forget_password_response.dart';
 import 'package:benchmark/app/modules/common/forget_password/new_password_page.dart';
 import 'package:benchmark/app/modules/common/loginoption/login_option_view.dart';
-import 'package:benchmark/app/repository/student%20repository/forget_password_repository.dart';
+import 'package:benchmark/app/repository/forget_password_repository.dart';
 import 'package:benchmark/app/services/api_client.dart';
 import 'package:benchmark/app/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
@@ -17,21 +18,22 @@ class ForgetPasswordController extends GetxController {
   final forgetPasswordKey = GlobalKey<FormState>();
   final newPasswordKey = GlobalKey<FormState>();
 
-  final emailoCntroller1 = TextEditingController();
+  final emailController1 = TextEditingController();
   final newPasswordController = TextEditingController();
   var sendOtpLoading = false.obs;
+  var passwordChangeLoading = false.obs;
   var otpError = true.obs;
   var otpPin = ''.obs;
 
-  void sendOtp(BuildContext context) {
+  void sendOtp(BuildContext context, String email) {
     if (forgetPasswordKey.currentState!.validate()) {
-      firstStep();
+      firstStep(email);
     }
   }
 
-  void changePassword(BuildContext context) {
+  void changePassword(BuildContext context, String email) {
     if (newPasswordKey.currentState!.validate()) {
-      secondStep();
+      secondStep(email);
       // Get.offAll(() => LoginOptionView());
     }
   }
@@ -43,20 +45,24 @@ class ForgetPasswordController extends GetxController {
   final Rx<ApiResponse<ForgetPasswordResponse>> firstStepresponse =
       ApiResponse<ForgetPasswordResponse>.initial().obs;
 
-  Future<void> firstStep() async {
+  Future<void> firstStep(String email) async {
     try {
+      log(" resend passowrd =${emailController1.text.trim()}");
       sendOtpLoading(true);
       firstStepresponse.value = ApiResponse<ForgetPasswordResponse>.loading();
       final user = {
-        "email": emailoCntroller1.value.text.trim(),
+        "email": emailController1.text.trim(),
       };
       final firstStepResult = await forgetPasswordRepository.firstStep(user);
       // log(registerResult.status.toString());
 
       if (firstStepResult.status == ApiStatus.SUCCESS) {
-        Get.to(() => NewPasswordPage(
-              email: emailoCntroller1.text.trim(),
-            ));
+        Get.off(
+            () => NewPasswordPage(
+                  email: email,
+                ),
+            transition: Transition.rightToLeft,
+            duration: duration);
 
         sendOtpLoading(false);
       } else {
@@ -73,13 +79,13 @@ class ForgetPasswordController extends GetxController {
   final Rx<ApiResponse<ForgetPasswordResponse>> secondStepResponse =
       ApiResponse<ForgetPasswordResponse>.initial().obs;
 
-  Future<void> secondStep() async {
+  Future<void> secondStep(String email) async {
     try {
       log(" this is new password ${newPasswordController.text.trim()}");
-      sendOtpLoading(true);
+      passwordChangeLoading(true);
       secondStepResponse.value = ApiResponse<ForgetPasswordResponse>.loading();
       final body = {
-        "email": emailoCntroller1.text.trim(),
+        "email": email,
         "newPassWord": newPasswordController.text.trim(),
         "otp": otpPin.value.toString()
       };
@@ -91,13 +97,13 @@ class ForgetPasswordController extends GetxController {
 
         Get.offAll(() => LoginOptionView());
 
-        sendOtpLoading(false);
+        passwordChangeLoading(false);
       } else {
-        sendOtpLoading.value = false;
+        passwordChangeLoading.value = false;
         CustomSnackBar.showFailure(" ${secondStepResult.message}");
       }
     } catch (e) {
-      sendOtpLoading(false);
+      passwordChangeLoading(false);
     }
   }
 
@@ -134,14 +140,5 @@ class ForgetPasswordController extends GetxController {
     // Check for additional criteria (e.g., at least one digit and one special character)
 
     return null; // Return null if the password meets the criteria
-  }
-
-  @override
-  void onClose() {
-    // Dispose controllers when the controller is closed
-    emailoCntroller1.dispose();
-    newPasswordController.dispose();
-
-    super.onClose();
   }
 }

@@ -4,7 +4,7 @@ import 'package:benchmark/app/config/fonts.dart';
 import 'package:benchmark/app/eSewa/esewa_function.dart';
 import 'package:benchmark/app/model/api_response/course_response_model.dart';
 import 'package:benchmark/app/model/api_response/my_course_response.dart';
-import 'package:benchmark/app/modules/common/note_list/purchase_controller.dart';
+import 'package:benchmark/app/modules/common/note_purchase/note_purchase_controller.dart';
 import 'package:benchmark/app/utils/token_util.dart';
 import 'package:benchmark/app/widgets/custom_app_bar.dart';
 import 'package:benchmark/app/widgets/custom_button.dart';
@@ -32,7 +32,7 @@ class PurchaseCornformationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(title: 'Order Summary'),
       body: SingleChildScrollView(
         child: Padding(
@@ -46,7 +46,8 @@ class PurchaseCornformationPage extends StatelessWidget {
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.15,
                 decoration: BoxDecoration(
-                    color: whiteColor, borderRadius: BorderRadius.circular(5)),
+                    color: AppColors.backgroundColor,
+                    borderRadius: BorderRadius.circular(5)),
                 child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -54,7 +55,7 @@ class PurchaseCornformationPage extends StatelessWidget {
                         flex: 4,
                         child: Container(
                           decoration: BoxDecoration(
-                              color: greyColor,
+                              color: AppColors.greyColor,
                               image: DecorationImage(
                                   fit: BoxFit.fill, image: AssetImage(image)),
                               borderRadius: BorderRadius.only(
@@ -75,7 +76,7 @@ class PurchaseCornformationPage extends StatelessWidget {
                                 textAlign: TextAlign
                                     .center, // Centers text within the container
                                 style: TextStyle(
-                                  color: blackColor,
+                                  color: AppColors.iconColors,
                                   fontFamily: FontStyles.poppins,
                                   fontSize: 17.sp,
                                   fontWeight: FontWeight.bold,
@@ -87,7 +88,7 @@ class PurchaseCornformationPage extends StatelessWidget {
                               Text(
                                 'Total: $totalNote Notes',
                                 style: TextStyle(
-                                  color: greyColor,
+                                  color: AppColors.greyColor,
                                   fontFamily: FontStyles.poppins,
                                   fontSize:
                                       15.sp, // Use screenutil for font sizing
@@ -100,7 +101,7 @@ class PurchaseCornformationPage extends StatelessWidget {
                               Text(
                                 '@BenchMark',
                                 style: TextStyle(
-                                  color: mainColor,
+                                  color: AppColors.mainColor,
                                   fontFamily: FontStyles.poppins,
                                   fontSize:
                                       15.sp, // Use screenutil for font sizing
@@ -130,7 +131,7 @@ class PurchaseCornformationPage extends StatelessWidget {
               height: 7.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: whiteColor,
+                color: AppColors.backgroundColor,
               ),
               child: Padding(
                 padding: const EdgeInsets.only(left: 8.0),
@@ -139,7 +140,8 @@ class PurchaseCornformationPage extends StatelessWidget {
                     children: [
                       Text(
                         'Total:Rs.${data.price}',
-                        style: TextStyle(color: mainColor, fontSize: 18.sp),
+                        style: TextStyle(
+                            color: AppColors.mainColor, fontSize: 18.sp),
                       ),
                       Container(
                         height: 7.h,

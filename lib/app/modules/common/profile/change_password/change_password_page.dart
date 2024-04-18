@@ -16,7 +16,7 @@ class ChangePasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(title: 'Change Password'),
       body: SingleChildScrollView(
           child: Padding(

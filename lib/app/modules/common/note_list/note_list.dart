@@ -1,26 +1,20 @@
-import 'dart:developer';
-
 import 'package:benchmark/app/config/api_endpoint.dart';
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/constants.dart';
 import 'package:benchmark/app/config/prefs.dart';
 import 'package:benchmark/app/eSewa/esewa_function.dart';
-import 'package:benchmark/app/model/api_response/course_response_model.dart';
 import 'package:benchmark/app/model/api_response/mcq_response.dart';
 import 'package:benchmark/app/model/api_response/my_course_response.dart';
 import 'package:benchmark/app/modules/common/loginoption/login_option_view.dart';
 import 'package:benchmark/app/modules/common/pdf_view/pdf_controller.dart';
-import 'package:benchmark/app/modules/common/all_Subject/note_controller.dart';
-import 'package:benchmark/app/modules/common/note_list/purchase_conformation_page.dart';
-import 'package:benchmark/app/utils/token_util.dart';
+import 'package:benchmark/app/modules/common/note_list/note_controller.dart';
+import 'package:benchmark/app/modules/common/note_purchase/note_purchase_conformation_page.dart';
 import 'package:benchmark/app/widgets/custom_app_bar.dart';
 import 'package:benchmark/app/widgets/loading_screen.dart';
 import 'package:benchmark/app/widgets/no_note_page.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:benchmark/app/modules/common/pdf_view/pdf_page.dart';
+import 'package:benchmark/app/modules/common/pdf_view/pdf_view_page.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -74,6 +68,8 @@ class NotesList extends StatelessWidget {
                                 pdfController.fetchPdf(ApiEndpoints.baseUrl +
                                     noteContorller.courseResponse.value
                                         .response!.data[index].fileLocation!);
+                                pdfController.enableSwipe.value = true;
+
                                 Get.to(
                                     () => PDFScreen(
                                           title: data.subject.toString(),
@@ -146,7 +142,7 @@ class NotesList extends StatelessWidget {
                             child: Container(
                               height: 5.7.h,
                               decoration: BoxDecoration(
-                                  color: mainColor,
+                                  color: AppColors.mainColor,
                                   borderRadius: BorderRadius.circular(30)),
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -221,13 +217,13 @@ class NotesList extends StatelessWidget {
                 children: [
                   Text(
                     note.name!,
-                    style: TextStyle(fontSize: 16, color: blackColor),
+                    style: TextStyle(fontSize: 16, color: AppColors.iconColors),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     "@benchmark",
-                    style: TextStyle(fontSize: 16, color: blackColor),
+                    style: TextStyle(fontSize: 16, color: AppColors.iconColors),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

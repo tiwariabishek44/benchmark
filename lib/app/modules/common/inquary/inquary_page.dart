@@ -2,9 +2,9 @@ import 'package:benchmark/app/config/api_endpoint.dart';
 import 'package:benchmark/app/config/app_style.dart';
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/fonts.dart';
-import 'package:benchmark/app/modules/common/buy_physical_items/inquiry_controller.dart';
+import 'package:benchmark/app/modules/common/inquary/inquiry_controller.dart';
 import 'package:benchmark/app/modules/common/login/login_controller.dart';
-import 'package:benchmark/app/modules/common/buy_physical_items/physical_Items_controller.dart';
+import 'package:benchmark/app/modules/common/physical_items/physical_Items_controller.dart';
 import 'package:benchmark/app/widgets/custom_app_bar.dart';
 import 'package:benchmark/app/widgets/custom_button.dart';
 import 'package:benchmark/app/widgets/customized_textfield.dart';
@@ -31,7 +31,7 @@ class InquiryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(
         title: 'Send Inquiry',
       ),
@@ -88,11 +88,20 @@ class InquiryPage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text("ID:${bookid.toString()}",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: AppColors.iconColors,
+                                  fontFamily: FontStyles.poppins,
+                                  fontSize: 17.sp,
+                                  fontWeight: FontWeight.bold,
+                                )),
                             Text(bookname,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  color: blackColor,
+                                  color: AppColors.iconColors,
                                   fontFamily: FontStyles.poppins,
                                   fontSize: 17.sp,
                                   fontWeight: FontWeight.bold,
@@ -119,7 +128,7 @@ class InquiryPage extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w800,
-                      color: mainColor),
+                      color: AppColors.mainColor),
                   textAlign: TextAlign.center,
                 ),
                 Column(

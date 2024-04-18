@@ -26,7 +26,7 @@ class ProfileTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         leading: leadingIcon,
-        tileColor: whiteColor,
+        tileColor: AppColors.backgroundColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         title: Text(
           title,

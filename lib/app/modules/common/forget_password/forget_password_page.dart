@@ -17,7 +17,7 @@ class ForgetPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(title: ''),
       body: SingleChildScrollView(
         child: Padding(
@@ -40,7 +40,7 @@ class ForgetPasswordPage extends StatelessWidget {
                 CustomizedTextfield(
                   validator: forgetPasswordController.emailValidator,
                   icon: Icons.email_outlined,
-                  myController: forgetPasswordController.emailoCntroller1,
+                  myController: forgetPasswordController.emailController1,
                   hintText: "Enter Email",
                 ),
                 SizedBox(height: 2.h),
@@ -53,7 +53,10 @@ class ForgetPasswordPage extends StatelessWidget {
                 Obx(() => CustomButton(
                     text: 'Send OTP',
                     onPressed: () {
-                      forgetPasswordController.sendOtp(context);
+                      forgetPasswordController.sendOtp(
+                          context,
+                          forgetPasswordController.emailController1.text
+                              .trim());
                     },
                     isLoading: forgetPasswordController.sendOtpLoading.value))
               ],

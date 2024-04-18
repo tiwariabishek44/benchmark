@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:benchmark/app/config/app_style.dart';
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/modules/common/forget_password/forget_password_controller.dart';
-import 'package:benchmark/app/modules/common/login/login_controller.dart';
 import 'package:benchmark/app/widgets/custom_app_bar.dart';
 import 'package:benchmark/app/widgets/custom_button.dart';
 import 'package:benchmark/app/widgets/customized_textfield.dart';
@@ -21,7 +20,7 @@ class NewPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(title: ''),
       body: SingleChildScrollView(
         child: Padding(
@@ -63,12 +62,22 @@ class NewPasswordPage extends StatelessWidget {
                     ),
                   ],
                 ),
+
                 SizedBox(
                   height: 3.h,
                 ),
                 Center(
                   child: Pinput(
                     length: 4,
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter the 4-digit code';
+                      }
+                      if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                        return 'Please enter digits only';
+                      }
+                      return null;
+                    },
                     onCompleted: (pin) {
                       forgetpasswordController.otpPin.value = pin;
                       log(" Otp pin ${pin}");
@@ -82,28 +91,42 @@ class NewPasswordPage extends StatelessWidget {
                     },
                   ),
                 ),
-                SizedBox(height: 2.h),
+                SizedBox(height: 1.h), // Adjust as needed
+                TextButton(
+                  onPressed: () {
+                    // Add logic to resend the verification code
+                    // Here, you can call a function to resend the code
+                    forgetpasswordController.sendOtp(context, email);
+                  },
+                  child: Text(
+                    'Resend code',
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                ),
+                SizedBox(height: 4.h),
                 CustomizedTextfield(
-                  key: const Key("New Password"),
                   validator: forgetpasswordController.passwordValidator,
                   icon: Icons.password,
                   myController: forgetpasswordController.newPasswordController,
                   hintText: "Enter New Password",
                 ),
                 Text(
-                  "If you don't see a code in your innbox, check your spam folder . If it's not there , the email address may not be confirmed, or it may not match an existing Benchmark account.",
+                  "If you don't see a code in your innbox, check your spam folder. If it's not there, the email address may not be confirmed, or it may not match an existing Benchmark account.",
                   style: AppStyles.listTilesubTitle,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 5,
                 ),
                 Obx(() => CustomButton(
-                    text: 'Confirm',
-                    onPressed: () {
-                      forgetpasswordController.otpError.value
-                          ? log(" Enter the 4 digit otp")
-                          : forgetpasswordController.changePassword(context);
-                    },
-                    isLoading: forgetpasswordController.sendOtpLoading.value))
+                      text: 'Confirm',
+                      onPressed: () {
+                        forgetpasswordController.otpError.value
+                            ? log(" Enter the 4 digit otp")
+                            : forgetpasswordController.changePassword(
+                                context, email);
+                      },
+                      isLoading:
+                          forgetpasswordController.passwordChangeLoading.value,
+                    ))
               ],
             ),
           ),

@@ -1,9 +1,6 @@
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class WelcomeHeading extends StatelessWidget {
@@ -31,7 +28,7 @@ class WelcomeHeading extends StatelessWidget {
                   textAlign:
                       TextAlign.center, // Centers text within the container
                   style: TextStyle(
-                    color: mainColor,
+                    color: AppColors.mainColor,
                     fontFamily: FontStyles.poppins,
                     fontSize: 23.sp, // Use screenutil for font sizing
                     fontWeight: FontWeight.bold,
@@ -40,7 +37,7 @@ class WelcomeHeading extends StatelessWidget {
                 Text(
                   subHeading,
                   style: TextStyle(
-                    color: mainColor,
+                    color: AppColors.mainColor,
                     fontSize: 17.sp, // Use screenutil for font sizing
                   ),
                 ),

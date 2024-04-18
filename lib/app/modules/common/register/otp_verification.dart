@@ -85,7 +85,7 @@ class OtpVerification extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 13.5.sp,
                               fontWeight: FontWeight.w500,
-                              color: lightColor,
+                              color: AppColors.backgroundColor,
                             ),
                           ),
                           const SizedBox(
@@ -132,7 +132,7 @@ class OtpVerification extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: lightColor,
+                                  color: AppColors.backgroundColor,
                                 ),
                               ),
                               SizedBox(

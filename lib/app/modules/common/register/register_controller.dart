@@ -1,7 +1,5 @@
 import 'dart:developer';
-import 'dart:ffi';
 import 'package:benchmark/app/model/api_response/otp_response.dart';
-import 'package:benchmark/app/modules/common/login/login_page.dart';
 import 'package:benchmark/app/modules/common/loginoption/login_option_view.dart';
 import 'package:benchmark/app/modules/common/register/otp_verification.dart';
 import 'package:benchmark/app/repository/otp_verify_repository.dart';
@@ -32,21 +30,15 @@ class RegisterController extends GetxController {
   var otpPin = ''.obs;
 
   var selectedValue =
-      'Science'.obs; // This will hold the selected dropdown value
+      'SCIENCE'.obs; // This will hold the selected dropdown value
 
   void updateSelectedValue(String value) {
     selectedValue.value = value;
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   void registerUser(BuildContext context) {
     if (registerFromkey.currentState!.validate()) {
       if (termsAndConditions.value) {
-        log(' this si the register ');
         register(context);
 
         // registerUsers();
@@ -68,14 +60,16 @@ class RegisterController extends GetxController {
       isregisterLoading(true);
       registerResponse.value = ApiResponse<RegisterResponseModel>.loading();
       final user = {
-        "email": emailcontroller.value.text.trim(),
-        "phoneNumber": phonenocontroller.value.text.trim(),
-        "name": namecontroller.value.text.trim(),
-        "password": passwordcontroller.value.text.trim(),
+        "email": emailcontroller.text.trim(),
+        "phoneNumber": phonenocontroller.text.trim(),
+        "name": namecontroller.text.trim(),
+        "password": passwordcontroller.text.trim(),
         "accountType":
             loginOptionController.isUser.value ? "STUDENT" : "TEACHER",
-        "stream": ""
+        "stream": selectedValue.value
       };
+
+      log(" this is user ${user}");
 
       final registerResult = await registerRepository.registerUser(user);
       // log('-------------------------user data-------------');
@@ -150,13 +144,7 @@ class RegisterController extends GetxController {
       return 'Username must be at least 4 characters in length';
     }
     // Check if the username contains only alphanumeric characters
-    if (!RegExp(r'^[a-zA-Z0-9]+$').hasMatch(value)) {
-      return 'Username can only contain alphanumeric characters';
-    }
-    // Check for additional criteria (e.g., maximum length)
-    if (value.trim().length > 20) {
-      return 'Username cannot exceed 20 characters';
-    }
+
     // Return null if the entered username is valid
     return null;
   }

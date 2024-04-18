@@ -2,7 +2,7 @@
 //hridaya --192.168.1.186
 
 class ApiEndpoints {
-  static const baseUrl = "http://192.168.1.186:8080";
+  static const baseUrl = "http://192.168.1.69:8080";
   static const registerPhase1 =
       "$baseUrl/api/open/common/account/registration-phase-1";
   static const registerPhase2 =

@@ -2,7 +2,7 @@ import 'package:benchmark/app/config/api_endpoint.dart';
 import 'package:benchmark/app/config/app_style.dart';
 import 'package:benchmark/app/modules/common/mcq/mcq_controller.dart';
 import 'package:benchmark/app/modules/common/pdf_view/pdf_controller.dart';
-import 'package:benchmark/app/modules/common/pdf_view/pdf_page.dart';
+import 'package:benchmark/app/modules/common/pdf_view/pdf_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -56,11 +56,13 @@ class _AllMcqsState extends State<AllMcqs> {
               return Card(
                 child: ListTile(
                   contentPadding: EdgeInsets.all(3),
-                  tileColor: backgroundColor,
+                  tileColor: AppColors.backgroundColor,
                   onTap: () {
                     pdfcontroller.fetchPdf(ApiEndpoints.baseUrl +
                         mcqController.mcqResponse.value.response!.data[index]
                             .fileLocation!);
+                    pdfcontroller.enableSwipe.value = true;
+
                     Get.to(
                       () => PDFScreen(
                         title: mcqController
@@ -77,13 +79,13 @@ class _AllMcqsState extends State<AllMcqs> {
                     height: 40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
-                      color: mainColor,
+                      color: AppColors.mainColor,
                     ),
                     child: Center(
                       child: Text(
                         "${index + 1}",
                         style: TextStyle(
-                          color: whiteColor,
+                          color: AppColors.backgroundColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -102,9 +104,10 @@ class _AllMcqsState extends State<AllMcqs> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   subtitle: Text(
-                    "2078", // Add your subtitle here
+                    mcqController.mcqResponse.value.response!.data![index]
+                        .name!, // Add your subtitle here
                     style: TextStyle(
-                      color: blackColor,
+                      color: AppColors.iconColors,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

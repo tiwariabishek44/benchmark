@@ -29,21 +29,21 @@ class DownloadingScreen extends StatelessWidget {
               Icon(
                 Icons.cloud_download,
                 size: 50,
-                color: mainColor,
+                color: AppColors.mainColor,
               ),
               SizedBox(height: 20),
               // Customizable content, e.g., text
               Text(
                 'Loading PDF...',
                 style: TextStyle(
-                  color: mainColor,
+                  color: AppColors.mainColor,
                   fontSize: 18,
                 ),
               ),
               SizedBox(height: 10),
               // Loading indicator
               SpinKitFadingCircle(
-                color: mainColor,
+                color: AppColors.mainColor,
               ),
               SizedBox(height: 20),
               // Customizable image

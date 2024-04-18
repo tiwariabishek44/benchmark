@@ -10,35 +10,22 @@ import 'package:benchmark/app/widgets/welcome_heading.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class RegisterPage extends StatefulWidget {
-  @override
-  // ignore: library_private_types_in_public_api
-
-  State<RegisterPage> createState() => _RegisterPageState();
-}
-
-class _RegisterPageState extends State<RegisterPage> {
+class RegisterPage extends StatelessWidget {
   final registercontroller = Get.put(RegisterController());
+
   final loginOptionController = Get.put(LoginOptionController());
-  String? _selectedOption;
-  final List<String> options = [
-    'Science',
-    'Management',
-  ];
-  // Replace with your own options
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0,
-          backgroundColor: backgroundColor,
+          backgroundColor: AppColors.backgroundColor,
         ),
         body: Container(
-            color: backgroundColor,
+            color: AppColors.backgroundColor,
             width: MediaQuery.of(context).size.width,
             height: context.height,
             child: SafeArea(
@@ -77,6 +64,41 @@ class _RegisterPageState extends State<RegisterPage> {
                         hintText: "Name",
                       ),
                       gapH2,
+                      Obx(() => Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 1, vertical: 3),
+                            child: Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              decoration: BoxDecoration(
+                                color: AppColors.backgroundColor,
+                                borderRadius: BorderRadius.circular(8.0),
+                                border: Border.all(color: AppColors.mainColor),
+                              ),
+                              child: DropdownButton(
+                                isExpanded: true,
+                                iconSize: 36.0,
+                                iconEnabledColor: AppColors.mainColor,
+                                elevation: 8,
+                                style: TextStyle(color: AppColors.mainColor),
+                                underline: SizedBox(),
+                                value: registercontroller.selectedValue.value,
+                                items: ['SCIENCE', 'MANAGEMENT']
+                                    .map<DropdownMenuItem<String>>(
+                                      (String value) =>
+                                          DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      ),
+                                    )
+                                    .toList(),
+                                onChanged: (newValue) {
+                                  registercontroller
+                                      .updateSelectedValue(newValue!);
+                                },
+                              ),
+                            ),
+                          )),
                       Obx(
                         () => CustomPasswordField(
                           onPressed: () {

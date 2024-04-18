@@ -68,7 +68,7 @@ class SessionInfoScreen extends StatelessWidget {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: mainColor,
+                          color: AppColors.mainColor,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Padding(

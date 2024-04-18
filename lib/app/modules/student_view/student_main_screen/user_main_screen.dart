@@ -1,12 +1,8 @@
 import 'dart:developer';
 
-import 'package:benchmark/app/config/color.dart';
-import 'package:benchmark/app/config/fonts.dart';
 import 'package:benchmark/app/modules/common/homepage.dart/homepage.dart';
 import 'package:benchmark/app/modules/student_view/my_course/my_course_page.dart';
-import 'package:benchmark/app/modules/common/profile/profile_page.dart';
 import 'package:benchmark/app/modules/student_view/student_main_screen/user_screen_controller.dart';
-import 'package:benchmark/app/utils/token_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -117,13 +113,13 @@ class MyBottomNavigationBarItem {
                 ? Colors.black
                 : const Color.fromARGB(255, 69, 67, 67),
             // Outline the icon if not selected
-            size: 19.0.sp,
+            size: 21.0.sp,
             semanticLabel: label,
           ),
           Text(
             label,
             style: TextStyle(
-              fontSize: 13.sp,
+              fontSize: 14.sp,
               color: isSelected
                   ? Colors.black
                   : const Color.fromARGB(255, 69, 67, 67),

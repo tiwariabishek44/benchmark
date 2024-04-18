@@ -1,12 +1,10 @@
 import 'package:benchmark/app/config/app_style.dart';
 import 'package:benchmark/app/config/color.dart';
-import 'package:benchmark/app/model/api_response/user_data_response.dart';
 import 'package:benchmark/app/modules/common/login/login_controller.dart';
 import 'package:benchmark/app/modules/common/loginoption/login_option_view.dart';
-import 'package:benchmark/app/modules/common/profile/all_transction/all_transction_page.dart';
-import 'package:benchmark/app/modules/common/profile/change_password/change_password_page.dart';
+import 'package:benchmark/app/modules/common/profile/about_us.dart';
 import 'package:benchmark/app/modules/common/profile/edit_profile.dart/profile_controller.dart';
-import 'package:benchmark/app/modules/common/profile/edit_profile.dart/edit_profile_page.dart';
+import 'package:benchmark/app/modules/common/profile/terms_and_conditions.dart';
 import 'package:benchmark/app/widgets/custom_app_bar.dart';
 import 'package:benchmark/app/widgets/pop_up_logout.dart';
 import 'package:benchmark/app/widgets/profile_tile.dart';
@@ -64,11 +62,19 @@ class ProfilePage extends StatelessWidget {
                 ),
                 ProfileTile(
                   onTap: () {
-                    // Get.to(() => AboutUsPage(),
-                    //     transition: Transition.rightToLeft, duration: duration);
+                    Get.to(() => AboutUs(),
+                        transition: Transition.rightToLeft, duration: duration);
                   },
                   title: "About Us",
                   leadingIcon: const Icon(Icons.info_outline),
+                ),
+                ProfileTile(
+                  onTap: () {
+                    Get.to(() => TermsAndConditionsPage(),
+                        transition: Transition.rightToLeft, duration: duration);
+                  },
+                  title: "Terms & Conditions",
+                  leadingIcon: const Icon(Icons.policy_outlined),
                 ),
                 ProfileTile(
                   onTap: () {
@@ -116,11 +122,19 @@ class ProfilePage extends StatelessWidget {
                 ),
                 ProfileTile(
                   onTap: () {
-                    // Get.to(() => AboutUsPage(),
-                    //     transition: Transition.rightToLeft, duration: duration);
+                    Get.to(() => AboutUs(),
+                        transition: Transition.rightToLeft, duration: duration);
                   },
                   title: "About Us",
                   leadingIcon: const Icon(Icons.info_outline),
+                ),
+                ProfileTile(
+                  onTap: () {
+                    Get.to(() => TermsAndConditionsPage(),
+                        transition: Transition.rightToLeft, duration: duration);
+                  },
+                  title: "Terms & Conditions",
+                  leadingIcon: const Icon(Icons.policy_outlined),
                 ),
                 ProfileTile(
                   onTap: () {

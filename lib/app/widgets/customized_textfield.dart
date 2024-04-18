@@ -21,7 +21,7 @@ class CustomizedTextfield extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
-        style: TextStyle(color: mainColor),
+        style: TextStyle(color: AppColors.mainColor),
         validator: validator,
         controller: myController,
         decoration: InputDecoration(
@@ -37,24 +37,24 @@ class CustomizedTextfield extends StatelessWidget {
 
           prefixIcon: Icon(
             icon,
-            color: mainColor,
+            color: AppColors.mainColor,
             size: 21.5.sp,
           ),
 
           contentPadding: EdgeInsets.symmetric(
               vertical: 15, horizontal: 15), // Adjust the vertical padding
           enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: mainColor, width: 1),
+            borderSide: const BorderSide(color: AppColors.mainColor, width: 1),
             borderRadius: BorderRadius.circular(10),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: mainColor, width: 1),
+            borderSide: const BorderSide(color: AppColors.mainColor, width: 1),
             borderRadius: BorderRadius.circular(10),
           ),
           fillColor: Color.fromARGB(255, 255, 255, 255),
           filled: true,
           labelText: hintText,
-          labelStyle: TextStyle(color: mainColor),
+          labelStyle: TextStyle(color: AppColors.mainColor),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),

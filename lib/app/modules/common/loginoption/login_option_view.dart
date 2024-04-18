@@ -15,7 +15,7 @@ class LoginOptionView extends StatelessWidget {
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        backgroundColor: backgroundColor,
+        backgroundColor: AppColors.backgroundColor,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -60,7 +60,7 @@ class LoginOptionView extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 17,
                                   color: loginOptionController.isUser.value
-                                      ? mainColor
+                                      ? AppColors.mainColor
                                       : null),
                             ),
                           ]),
@@ -91,7 +91,7 @@ class LoginOptionView extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 17,
                                   color: !loginOptionController.isUser.value
-                                      ? mainColor
+                                      ? AppColors.mainColor
                                       : null),
                             ),
                           ]),

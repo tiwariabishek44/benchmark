@@ -29,8 +29,8 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
-        style:
-            TextStyle(color: mainColor), // Set your preferred text color here
+        style: TextStyle(
+            color: AppColors.mainColor), // Set your preferred text color here
         controller: widget.controller,
         obscureText: !widget.isVisible,
         validator: widget.validator, // Use the provided validator
@@ -47,17 +47,17 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
           contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
           prefixIcon: Icon(
             widget.icon,
-            color: mainColor,
+            color: AppColors.mainColor,
             size: 21.5.sp,
           ),
           labelText: widget.labelText,
-          labelStyle: TextStyle(color: mainColor),
+          labelStyle: TextStyle(color: AppColors.mainColor),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: mainColor, width: 1),
+            borderSide: BorderSide(color: AppColors.mainColor, width: 1),
             borderRadius: BorderRadius.circular(10),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: mainColor, width: 1),
+            borderSide: const BorderSide(color: AppColors.mainColor, width: 1),
             borderRadius: BorderRadius.circular(10),
           ),
           filled: true,
@@ -66,7 +66,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
             borderRadius: BorderRadius.circular(10),
           ),
           suffixIcon: IconButton(
-            color: mainColor,
+            color: AppColors.mainColor,
             icon: Icon(
                 widget.isVisible ? Icons.visibility : Icons.visibility_off),
             onPressed: () {

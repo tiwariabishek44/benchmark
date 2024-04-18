@@ -1,8 +1,8 @@
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/constants.dart';
-import 'package:benchmark/app/modules/common/buy_physical_items/item_list_view.dart';
+import 'package:benchmark/app/modules/common/physical_items/physical_item_list_view.dart';
 import 'package:benchmark/app/modules/common/login/login_controller.dart';
-import 'package:benchmark/app/modules/common/all_Subject/note_controller.dart';
+import 'package:benchmark/app/modules/common/note_list/note_controller.dart';
 import 'package:benchmark/app/modules/common/profile/profile_page.dart';
 
 import 'package:benchmark/app/widgets/switch_case_widget.dart';
@@ -21,13 +21,13 @@ class TeacherHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor: AppColors.backgroundColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
               height: 30.h,
-              color: mainColor,
+              color: AppColors.mainColor,
               child: Padding(
                 padding: AppPadding.screenHorizontalPadding,
                 child: Column(
@@ -51,7 +51,7 @@ class TeacherHomePage extends StatelessWidget {
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
-                                          color: whiteColor,
+                                          color: AppColors.backgroundColor,
                                           fontSize: 20.sp,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -59,7 +59,7 @@ class TeacherHomePage extends StatelessWidget {
                                   Text(
                                     "Let's Start Learning",
                                     style: TextStyle(
-                                        color: whiteColor,
+                                        color: AppColors.backgroundColor,
                                         fontSize: 15.sp,
                                         fontWeight: FontWeight.w400),
                                   ),
@@ -76,13 +76,13 @@ class TeacherHomePage extends StatelessWidget {
                                     height: 45,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      color: backgroundColor,
+                                      color: AppColors.backgroundColor,
                                     ),
                                     child: const Padding(
                                       padding: EdgeInsets.all(10.0),
                                       child: Icon(
                                         Icons.shopping_cart_outlined,
-                                        color: mainColor,
+                                        color: AppColors.mainColor,
                                       ),
                                     )),
                               ),
@@ -100,13 +100,13 @@ class TeacherHomePage extends StatelessWidget {
                                     height: 45,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      color: backgroundColor,
+                                      color: AppColors.backgroundColor,
                                     ),
                                     child: const Padding(
                                       padding: EdgeInsets.all(10.0),
                                       child: Icon(
                                         Icons.settings,
-                                        color: mainColor,
+                                        color: AppColors.mainColor,
                                       ),
                                     )),
                               ),
@@ -131,11 +131,11 @@ class TeacherHomePage extends StatelessWidget {
                                   child: selectedTopics(
                                       'Streams',
                                       noteContorller.selectedTopic.value == 0
-                                          ? whiteColor
+                                          ? AppColors.backgroundColor
                                           : Colors.transparent,
                                       noteContorller.selectedTopic.value == 0
-                                          ? mainColor
-                                          : blackColor)),
+                                          ? AppColors.mainColor
+                                          : AppColors.iconColors)),
                             ),
                             Expanded(
                               child: GestureDetector(
@@ -145,11 +145,11 @@ class TeacherHomePage extends StatelessWidget {
                                   child: selectedTopics(
                                       "MCQ's",
                                       noteContorller.selectedTopic.value == 1
-                                          ? whiteColor
+                                          ? AppColors.backgroundColor
                                           : Colors.transparent,
                                       noteContorller.selectedTopic.value == 1
-                                          ? mainColor
-                                          : blackColor)),
+                                          ? AppColors.mainColor
+                                          : AppColors.iconColors)),
                             ),
                           ]),
                         ),
@@ -162,7 +162,7 @@ class TeacherHomePage extends StatelessWidget {
             Obx(() => Container(
                   height: 70.h,
                   decoration: const BoxDecoration(
-                    color: backgroundColor,
+                    color: AppColors.backgroundColor,
                   ),
                   width: double.infinity,
                   child: Padding(

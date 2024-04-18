@@ -31,7 +31,13 @@ class LoginController extends GetxController {
   final loginFromkey = GlobalKey<FormState>();
   final termsAndConditions = false.obs;
 
-//-------- FOR FROGET PASSWORD-------
+  @override
+  void onClose() {
+    emailcontroller.dispose();
+    passwordcontroller.dispose();
+    super.onClose();
+  }
+
   var isPasswordVisible = false.obs;
 
   void loginUser(BuildContext context) {
@@ -225,14 +231,5 @@ class LoginController extends GetxController {
     // Check for additional criteria (e.g., at least one digit and one special character)
 
     return null; // Return null if the password meets the criteria
-  }
-
-  @override
-  void onClose() {
-    // Dispose controllers when the controller is closed
-    emailcontroller.dispose();
-    passwordcontroller.dispose();
-
-    super.onClose();
   }
 }

@@ -15,7 +15,6 @@ class CourseController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    log("------COURSE CONTRLLER IS INITILIZE");
     fetchAllCourse();
   }
 

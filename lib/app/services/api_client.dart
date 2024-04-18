@@ -21,6 +21,7 @@ class ApiClient {
     T Function(dynamic json)? responseType,
   }) async {
     try {
+      log(" this is the post api call ${endPoint}         request body ${requestBody}");
       final response = await httpClient.post(Uri.parse(endPoint),
           headers: {
             'Content-Type':

@@ -17,7 +17,7 @@ class LoadingScreen extends StatelessWidget {
         BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 0.1, sigmaY: 0.1),
           child: Container(
-            color: whiteColor,
+            color: AppColors.backgroundColor,
           ),
         ),
         // Loading indicator

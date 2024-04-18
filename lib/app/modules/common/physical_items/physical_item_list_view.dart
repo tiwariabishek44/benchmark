@@ -2,8 +2,8 @@ import 'package:benchmark/app/config/api_endpoint.dart';
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/constants.dart';
 import 'package:benchmark/app/config/fonts.dart';
-import 'package:benchmark/app/modules/common/buy_physical_items/inquary_page.dart';
-import 'package:benchmark/app/modules/common/buy_physical_items/physical_Items_controller.dart';
+import 'package:benchmark/app/modules/common/inquary/inquary_page.dart';
+import 'package:benchmark/app/modules/common/physical_items/physical_Items_controller.dart';
 import 'package:benchmark/app/widgets/custom_app_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class PhysicalItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(title: "Buy Physical Books/Notes"),
       body: Padding(
         padding: AppPadding.screenHorizontalPadding,
@@ -144,7 +144,7 @@ class PhysicalItemView extends StatelessWidget {
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
-                                        color: mainColor,
+                                        color: AppColors.mainColor,
                                         fontFamily: FontStyles.poppins,
                                         fontSize: 17
                                             .sp, // Use screenutil for font sizing
@@ -158,7 +158,7 @@ class PhysicalItemView extends StatelessWidget {
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
-                                        color: mainColor,
+                                        color: AppColors.mainColor,
                                         fontFamily: FontStyles.poppins,
                                         fontSize: 15
                                             .sp, // Use screenutil for font sizing
@@ -168,7 +168,7 @@ class PhysicalItemView extends StatelessWidget {
                                     Container(
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                          color: mainColor,
+                                          color: AppColors.mainColor,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           boxShadow: [
@@ -192,11 +192,12 @@ class PhysicalItemView extends StatelessWidget {
                                             style: TextStyle(
                                                 fontSize: 16.sp,
                                                 fontWeight: FontWeight.w700,
-                                                color: whiteColor),
+                                                color:
+                                                    AppColors.backgroundColor),
                                           ),
                                           Icon(
                                             Icons.arrow_forward,
-                                            color: whiteColor,
+                                            color: AppColors.backgroundColor,
                                           )
                                         ],
                                       )),

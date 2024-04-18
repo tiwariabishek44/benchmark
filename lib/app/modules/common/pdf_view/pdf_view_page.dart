@@ -7,6 +7,7 @@ import 'package:benchmark/app/widgets/downloading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class PDFScreen extends StatefulWidget {
   final String pdfUrl;
@@ -31,19 +32,26 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         title: Text(
           widget.title,
-          style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
+          style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w700),
         ),
-        backgroundColor: whiteColor,
+        backgroundColor: AppColors.backgroundColor,
         centerTitle: true,
         actions: [
           Padding(
             padding: EdgeInsets.all(8.0),
             child: Obx(() => GestureDetector(
                 onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                          "${pdfcontroller.enableSwipe.value ? " The page is lock" : "The page is unlock"}"),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
                   pdfcontroller.enableSwipe.value =
                       !pdfcontroller.enableSwipe.value;
                 },
@@ -81,7 +89,6 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
                   setState(() {
                     errorMessage = error.toString();
                   });
-                  print(error.toString());
                 },
                 onPageError: (page, error) {
                   setState(() {
@@ -112,7 +119,7 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
                         children: [
                           Icon(
                             Icons.error_outline,
-                            color: mainColor,
+                            color: AppColors.mainColor,
                             size: 48.0,
                           ),
                           SizedBox(height: 16.0),
@@ -121,7 +128,7 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
                             style: TextStyle(
                               fontSize: 20.0,
                               fontWeight: FontWeight.bold,
-                              color: mainColor,
+                              color: AppColors.mainColor,
                             ),
                           ),
                           SizedBox(height: 8.0),
@@ -145,10 +152,12 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
                             },
                             child: Text(
                               'Retry',
-                              style: TextStyle(color: whiteColor),
+                              style:
+                                  TextStyle(color: AppColors.backgroundColor),
                             ),
                             style: ElevatedButton.styleFrom(
-                              primary: mainColor, // Customize the button color
+                              primary: AppColors
+                                  .mainColor, // Customize the button color
                             ),
                           ),
                         ],

@@ -1,10 +1,10 @@
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/constants.dart';
 import 'package:benchmark/app/config/fonts.dart';
-import 'package:benchmark/app/modules/common/all_Subject/all_subject_page.dart';
-import 'package:benchmark/app/modules/common/all_Subject/course_controller.dart';
-import 'package:benchmark/app/modules/common/all_Subject/subject_controller.dart';
-import 'package:benchmark/app/modules/common/all_Subject/note_controller.dart';
+import 'package:benchmark/app/modules/common/course/course_page.dart';
+import 'package:benchmark/app/modules/common/course/course_controller.dart';
+import 'package:benchmark/app/modules/common/homepage.dart/stream_list.dart';
+import 'package:benchmark/app/modules/common/note_list/note_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -30,7 +30,7 @@ class SubjectList extends StatelessWidget {
               courseController.fetchAllCourse();
 
               Get.to(
-                  () => AllSubjectPage(
+                  () => CoursePage(
                         title: allStreams[index].name,
                       ),
                   duration: duration,
@@ -53,7 +53,7 @@ class SubjectList extends StatelessWidget {
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
-                            color: greyColor,
+                            color: AppColors.greyColor,
                             image: DecorationImage(
                                 fit: BoxFit.fill,
                                 image: AssetImage(allStreams[index].image)),
@@ -72,7 +72,7 @@ class SubjectList extends StatelessWidget {
                             textAlign: TextAlign
                                 .center, // Centers text within the container
                             style: TextStyle(
-                              color: mainColor,
+                              color: AppColors.mainColor,
                               fontFamily: FontStyles.poppins,
                               fontSize: 17.sp, // Use screenutil for font sizing
                               fontWeight: FontWeight.bold,

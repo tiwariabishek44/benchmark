@@ -18,7 +18,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final logincontroller = Get.put(LoginController());
-
+  @override
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -74,7 +74,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Obx(() => CustomButton(
-                  key: Key("loginButton"),
                   isLoading: logincontroller.isLoginLoading.value,
                   onPressed: () {
                     logincontroller.loginUser(context);
@@ -101,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       'OR',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: mainColor,
+                        color: AppColors.mainColor,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),

@@ -5,18 +5,18 @@ import 'package:get/get.dart';
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/constants.dart';
 import 'package:benchmark/app/config/fonts.dart';
-import 'package:benchmark/app/modules/common/all_Subject/course_controller.dart';
-import 'package:benchmark/app/modules/common/all_Subject/note_controller.dart';
+import 'package:benchmark/app/modules/common/course/course_controller.dart';
+import 'package:benchmark/app/modules/common/note_list/note_controller.dart';
 import 'package:benchmark/app/modules/common/note_list/note_list.dart';
 
 import 'package:get_storage/get_storage.dart';
 
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class AllSubjectPage extends StatelessWidget {
+class CoursePage extends StatelessWidget {
   final String title;
 
-  AllSubjectPage({Key? key, required this.title});
+  CoursePage({Key? key, required this.title});
 
   final courseController = Get.put(CourseController());
   final noteController = Get.put(NoteController());
@@ -24,8 +24,10 @@ class AllSubjectPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
+        elevation: 0,
+        scrolledUnderElevation: 0,
         title: Text('Grade $title'),
       ),
       body: Padding(
@@ -61,7 +63,8 @@ class AllSubjectPage extends StatelessWidget {
                 final titleParts = title.split(' ');
                 final grades = titleParts[0];
                 final stream = titleParts[1];
-                return course.grade == grades && course.stream == stream;
+                return course.grade == grades &&
+                    (course.stream == stream || course.stream == "BOTH");
               }).toList();
 
               if (filteredCourses.isEmpty) {
@@ -90,7 +93,7 @@ class AllSubjectPage extends StatelessWidget {
                   return InkWell(
                     onTap: () {
                       noteController.fetchAllNotes(
-                        title.split(' ')[1],
+                        course.stream,
                         title.split(' ')[0],
                         course.subject!,
                       );
@@ -124,7 +127,7 @@ class AllSubjectPage extends StatelessWidget {
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: greyColor,
+                                  color: AppColors.greyColor,
                                   image: DecorationImage(
                                       fit: BoxFit.fill,
                                       image:
@@ -145,7 +148,7 @@ class AllSubjectPage extends StatelessWidget {
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                    color: mainColor,
+                                    color: AppColors.mainColor,
                                     fontFamily: FontStyles.poppins,
                                     fontSize: 17.sp,
                                     fontWeight: FontWeight.bold,
@@ -165,6 +168,13 @@ class AllSubjectPage extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
+                                course.stream == "BOTH"
+                                    ? Container(
+                                        height: 1.h,
+                                        width: 1.h,
+                                        color: AppColors.iconColors,
+                                      )
+                                    : Container()
                               ],
                             ),
                           )

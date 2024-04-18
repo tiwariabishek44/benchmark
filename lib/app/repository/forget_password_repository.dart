@@ -19,7 +19,7 @@ class ForgetPasswordRepository {
 
   Future<ApiResponse<ForgetPasswordResponse>> secondStep(requesBody) async {
     final response = await ApiClient().postApi<ForgetPasswordResponse>(
-      ApiEndpoints.forgetpassword1,
+      ApiEndpoints.forgetpassword2,
       requestBody: requesBody,
       isTokenRequired: false,
       responseType: (json) => ForgetPasswordResponse.fromJson(json),
