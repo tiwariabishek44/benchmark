@@ -1,17 +1,15 @@
+// TO CORNFIRM THE PURCHASE OF COURSE
+// WE HAD INTIGERATE ESEWA FOR PAYMENT
+
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/constants.dart';
 import 'package:benchmark/app/config/fonts.dart';
 import 'package:benchmark/app/eSewa/esewa_function.dart';
-import 'package:benchmark/app/model/api_response/course_response_model.dart';
 import 'package:benchmark/app/model/api_response/my_course_response.dart';
 import 'package:benchmark/app/modules/common/note_purchase/note_purchase_controller.dart';
-import 'package:benchmark/app/utils/token_util.dart';
 import 'package:benchmark/app/widgets/custom_app_bar.dart';
 import 'package:benchmark/app/widgets/custom_button.dart';
-import 'package:benchmark/app/widgets/payment_succesfull.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';

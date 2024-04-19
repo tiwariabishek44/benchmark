@@ -1,17 +1,8 @@
-//---login controlller
-
 import 'dart:developer';
-
-import 'package:benchmark/app/config/api_endpoint.dart';
 import 'package:benchmark/app/config/prefs.dart';
-import 'package:benchmark/app/model/api_response/first_Login_response.dart';
 import 'package:benchmark/app/model/api_response/login_api_response.dart';
 import 'package:benchmark/app/model/api_response/teacher_login_response.dart';
-import 'package:benchmark/app/model/api_response/user_data_response.dart';
 import 'package:benchmark/app/modules/common/loginoption/login_option_controller.dart';
-import 'package:benchmark/app/modules/common/homepage.dart/homepage.dart';
-import 'package:benchmark/app/modules/student_view/student_main_screen/user_main_screen.dart';
-import 'package:benchmark/app/repository/ger_user_data_repository.dart';
 import 'package:benchmark/app/repository/login_repository.dart';
 import 'package:benchmark/app/services/api_client.dart';
 import 'package:benchmark/app/utils/token_util.dart';
@@ -42,41 +33,13 @@ class LoginController extends GetxController {
 
   void loginUser(BuildContext context) {
     if (loginFromkey.currentState!.validate()) {
-      loginOptionControllre.isUser.value ? firstLogin() : teacherLogin();
+      loginOptionControllre.isUser.value ? login() : teacherLogin();
     }
   }
 
   final LoginRepository loginRepository = LoginRepository();
 
-  final Rx<ApiResponse<FirstLoginResponse>> firstLoginResponse =
-      ApiResponse<FirstLoginResponse>.initial().obs;
-
-  Future<void> firstLogin() async {
-    try {
-      isLoginLoading(true);
-      firstLoginResponse.value = ApiResponse<FirstLoginResponse>.loading();
-      final user = {
-        "email": emailcontroller.value.text.trim(),
-        "password": passwordcontroller.value.text.trim(),
-      };
-      final loginResult = await loginRepository.firstLogin(user);
-      // log(registerResult.status.toString());
-
-      if (loginResult.status == ApiStatus.SUCCESS) {
-        log(" this is the login true successful ");
-        await login();
-
-        isLoginLoading(false);
-      } else {
-        isLoginLoading.value = false;
-        CustomSnackBar.showFailure(" ${loginResult.message}");
-      }
-    } catch (e) {
-      isLoginLoading(false);
-    }
-  }
-
-//--------------------SECOND LOGIN / VERIFY FOR THE SINGEL LOGIN ---------------
+//--------------------  STUDENT LOGIN
 
   final Rx<ApiResponse<LoginApiResponse>> loginApiResponse =
       ApiResponse<LoginApiResponse>.initial().obs;

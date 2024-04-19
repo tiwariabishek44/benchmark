@@ -1,3 +1,5 @@
+// TO VIEW THE PDF - NOTE
+// WITHOUT LOGIN THE PROTECTED- PAID COURSE CAN'T ACCESS
 import 'dart:async';
 import 'dart:developer';
 

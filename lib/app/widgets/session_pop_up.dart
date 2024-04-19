@@ -1,3 +1,5 @@
+// TO DISPLAY INFORMATION WHEN THE SESSION IS CLEAR
+
 import 'package:benchmark/app/config/app_style.dart';
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/modules/common/login/login_controller.dart';

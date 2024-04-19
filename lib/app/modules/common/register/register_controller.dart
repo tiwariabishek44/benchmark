@@ -138,7 +138,7 @@ class RegisterController extends GetxController {
 
   String? usernameValidator(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'This field is required';
+      return 'Please enter the name';
     }
     if (value.trim().length < 4) {
       return 'Username must be at least 4 characters in length';

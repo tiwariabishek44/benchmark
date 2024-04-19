@@ -1,3 +1,5 @@
+//LANDING PAGE OF THE APP  - TO DISPLAY HE GRADE
+
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/constants.dart';
 import 'package:benchmark/app/modules/common/physical_items/physical_item_list_view.dart';

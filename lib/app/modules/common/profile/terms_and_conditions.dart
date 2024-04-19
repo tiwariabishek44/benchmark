@@ -1,3 +1,5 @@
+// TermsAndConditions Page
+
 import 'package:benchmark/app/config/color.dart';
 import 'package:flutter/material.dart';
 

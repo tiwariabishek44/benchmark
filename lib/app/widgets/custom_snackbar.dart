@@ -1,3 +1,5 @@
+// CUSTOM SNACK BAR
+
 import 'package:flutter/material.dart';
 import 'package:benchmark/app/config/color.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';

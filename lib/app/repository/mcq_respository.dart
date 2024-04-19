@@ -1,4 +1,4 @@
-import 'dart:developer';
+// REPOSITORY TO GET ALL MCQ
 
 import 'package:benchmark/app/config/api_endpoint.dart';
 import 'package:benchmark/app/model/api_response/mcq_response.dart';

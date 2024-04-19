@@ -1,6 +1,7 @@
+// TO DISPLAY THE LIST OF THE PHYSICAL ITEMS
+
 import 'dart:developer';
 
-import 'package:benchmark/app/config/api_endpoint.dart';
 import 'package:benchmark/app/model/api_response/physical_items_response.dart';
 import 'package:benchmark/app/repository/get_physical_items_repository.dart';
 import 'package:benchmark/app/services/api_client.dart';

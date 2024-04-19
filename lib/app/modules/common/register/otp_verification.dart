@@ -1,5 +1,6 @@
+// REGISTER OTP VERIFICAITON
+
 import 'package:benchmark/app/config/color.dart';
-import 'package:benchmark/app/modules/common/login/login_page.dart';
 import 'package:benchmark/app/widgets/custom_button.dart';
 import 'package:benchmark/app/widgets/loading_screen.dart';
 import 'package:flutter/material.dart';
@@ -104,12 +105,6 @@ class OtpVerification extends StatelessWidget {
                               }
                             },
                           ),
-                          // Obx(
-                          //   () => registerController.otpError.value
-                          //       ? const CustomError(
-                          //           text: 'Please enter valid OTP')
-                          //       : const SizedBox(),
-                          // ),
                           const SizedBox(
                             height: 20,
                           ),
@@ -138,38 +133,6 @@ class OtpVerification extends StatelessWidget {
                               SizedBox(
                                 width: 1.w,
                               ),
-                              // Container(
-                              //   alignment: Alignment.center,
-                              //   height: 5.h,
-                              //   child: Obx(
-                              //     () => registerController
-                              //             .isverificationSentLoading.value
-                              //         ? TextButton(
-                              //             onPressed: () {},
-                              //             child:
-                              //                 const CircularProgressIndicator(
-                              //               color: primaryColor,
-                              //               strokeWidth: 2,
-                              //             ),
-                              //           )
-                              //         : registerController.canResend.value ==
-                              //                 false
-                              //             ? SizedBox(
-                              //                 width: 12.w,
-                              //               )
-                              //             : TextButton(
-                              //                 onPressed: () {},
-                              //                 child: const Text(
-                              //                   "Resend Otp",
-                              //                   style: TextStyle(
-                              //                     fontSize: 12,
-                              //                     fontWeight: FontWeight.w500,
-                              //                     color: primaryColor,
-                              //                   ),
-                              //                 ),
-                              //               ),
-                              //   ),
-                              // ),
                             ],
                           ),
                         ],

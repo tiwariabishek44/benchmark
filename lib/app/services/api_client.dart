@@ -1,3 +1,5 @@
+// CENTER API CALL POINT
+
 import 'dart:convert';
 import 'dart:developer';
 
@@ -5,9 +7,7 @@ import 'dart:io';
 
 import 'package:benchmark/app/config/prefs.dart';
 import 'package:benchmark/app/services/http_client.dart';
-import 'package:benchmark/app/utils/token_util.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class ApiClient {
@@ -21,7 +21,6 @@ class ApiClient {
     T Function(dynamic json)? responseType,
   }) async {
     try {
-      log(" this is the post api call ${endPoint}         request body ${requestBody}");
       final response = await httpClient.post(Uri.parse(endPoint),
           headers: {
             'Content-Type':
@@ -59,14 +58,12 @@ class ApiClient {
           }
         }
 
-// Log and return the error message
-        log("Error message: $message");
         return ApiResponse.error(message);
       }
     } on SocketException {
       return ApiResponse.error("Server Error");
     } catch (e) {
-      log(' THIS IS THE CATCH ERRROR ${e.toString()}');
+      // log(' THIS IS THE CATCH ERRROR ${e.toString()}');
       return ApiResponse.error("Something went wrong. Please try again later");
     }
   }
@@ -79,8 +76,8 @@ class ApiClient {
     T Function(dynamic json)? responseType,
   }) async {
     try {
-      log("-----INSIDE THE API CLIENT  ${TokenManager.getAccessToken()} ");
-      log("\n-----INSIDE THE API CLIENT  ${TokenManager.getRefreshToken()} ");
+      // log("-----INSIDE THE API CLIENT  ${TokenManager.getAccessToken()} ");
+      // log("\n-----INSIDE THE API CLIENT  ${TokenManager.getRefreshToken()} ");
 
       final response = await httpClient.get(Uri.parse(endPoint));
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -117,7 +114,7 @@ class ApiClient {
     } on SocketException {
       return ApiResponse.error("Server Error");
     } catch (e) {
-      log(e.toString() + "hello from api_clien");
+      // log(e.toString() + "hello from api_clien");
       return ApiResponse.error("Something went wrong. Please try again later");
     }
   }

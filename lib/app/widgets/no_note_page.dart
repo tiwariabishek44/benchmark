@@ -1,9 +1,7 @@
+// TO DISPLAY INFORMATION WHEN THERE IS NO NOTES
+
 import 'package:benchmark/app/config/app_style.dart';
-import 'package:benchmark/app/config/color.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class NoNotes extends StatelessWidget {
   const NoNotes({super.key});

@@ -1,8 +1,7 @@
-import 'dart:developer';
+// REPOSITROY FOR OTP VERIFICAITON
 
 import 'package:benchmark/app/config/api_endpoint.dart';
 import 'package:benchmark/app/model/api_response/otp_response.dart';
-import 'package:benchmark/app/model/api_response/register_response_model.dart';
 import 'package:benchmark/app/services/api_client.dart';
 
 class OtpVerifyRepository {

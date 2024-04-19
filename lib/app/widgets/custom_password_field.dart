@@ -1,3 +1,5 @@
+// CUSTOM PASSWORD FIELD
+
 import 'package:benchmark/app/config/color.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';

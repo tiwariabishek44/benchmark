@@ -1,3 +1,5 @@
+//  VERIFICATION PAGE IF TERACHER IS NOT VERIFIED
+
 import 'package:benchmark/app/config/app_style.dart';
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/modules/common/login/login_controller.dart';
@@ -13,7 +15,7 @@ class VerificationPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: AppColors.mainColor,
-        title: Text(
+        title: const Text(
           'Account Verification',
           style: TextStyle(
             fontSize: 20,
@@ -28,13 +30,13 @@ class VerificationPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.account_circle,
                 size: 100,
                 color: AppColors.mainColor, // Change the color as needed
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Your account is under verification.',
                 style: TextStyle(
                   fontSize: 18,

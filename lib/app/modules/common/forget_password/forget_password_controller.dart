@@ -14,7 +14,6 @@ import 'package:get_storage/get_storage.dart';
 class ForgetPasswordController extends GetxController {
   final storage = GetStorage();
 
-//-------- FOR FROGET PASSWORD-------
   final forgetPasswordKey = GlobalKey<FormState>();
   final newPasswordKey = GlobalKey<FormState>();
 
@@ -34,7 +33,6 @@ class ForgetPasswordController extends GetxController {
   void changePassword(BuildContext context, String email) {
     if (newPasswordKey.currentState!.validate()) {
       secondStep(email);
-      // Get.offAll(() => LoginOptionView());
     }
   }
 
@@ -47,7 +45,6 @@ class ForgetPasswordController extends GetxController {
 
   Future<void> firstStep(String email) async {
     try {
-      log(" resend passowrd =${emailController1.text.trim()}");
       sendOtpLoading(true);
       firstStepresponse.value = ApiResponse<ForgetPasswordResponse>.loading();
       final user = {

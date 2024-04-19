@@ -1,30 +1,26 @@
-//do you need internet --10.0.4.54
-//hridaya --192.168.1.186
-
 class ApiEndpoints {
   static const baseUrl = "http://192.168.1.69:8080";
+
+  //----------REGISTRATION URL
   static const registerPhase1 =
       "$baseUrl/api/open/common/account/registration-phase-1";
   static const registerPhase2 =
       "$baseUrl/api/open/common/account/registration-phase-2";
 
-//----------FORGET PASSORD --------
+//----------FORGET PASSORD URL
   static const forgetpassword1 =
       "$baseUrl/api/open/common/account/forget-password/step1";
   static const forgetpassword2 =
       "$baseUrl/api/open/common/account/forget-password/step2";
-//----------STUDENT LOGIN
-  static const firstLogin =
-      "$baseUrl/api/open/student/student-first-login-attempt";
+
+//----------STUDENT LOGIN URL
+
   static const secondLogin = "$baseUrl/api/open/student/login";
-//------------TEACHER LOGIN
+
+//------------TEACHER LOGIN URL
 
   static const teacherLogin = "$baseUrl/api/open/common/account/common-login";
 
-  static const resetPassword = "$baseUrl/api/v1/auth";
-  static const getUserDetails = "$baseUrl/api/v1/user";
-  static const userDetailUpdate = "$baseUrl/api/v1/user";
-  static const changePassword = "$baseUrl/api/v1/auth";
   //**notes */
   static const getAllNotes =
       "$baseUrl/api/open/common/book/class-books/get-all";

@@ -1,3 +1,5 @@
+// REGISTER PAGE
+
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/constants.dart';
 import 'package:benchmark/app/config/fonts.dart';

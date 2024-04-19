@@ -1,3 +1,5 @@
+// LOIGN SCREEN FOR THE BOTH TEACHER AND   STUDENT
+
 import 'package:benchmark/app/config/app_style.dart';
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/modules/common/forget_password/forget_password_page.dart';
@@ -32,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 20,
             ),
             CustomizedTextfield(
+              key: Key('Email'),
               validator: logincontroller.emailValidator,
               icon: Icons.email_outlined,
               myController: logincontroller.emailcontroller,
@@ -39,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SizedBox(height: 0.6.h),
             Obx(
+              key: Key('Password'),
               () => CustomPasswordField(
                 onPressed: () {
                   logincontroller.isPasswordVisible.value =
@@ -74,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Obx(() => CustomButton(
+                  key: Key('loginButton'),
                   isLoading: logincontroller.isLoginLoading.value,
                   onPressed: () {
                     logincontroller.loginUser(context);
@@ -124,6 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontSize: 14, color: Color.fromARGB(255, 59, 89, 63)),
                 ),
                 GestureDetector(
+                  key: Key('register'),
                   onTap: () {
                     Get.to(() => RegisterPage(),
                         transition: Transition.rightToLeft, duration: duration);

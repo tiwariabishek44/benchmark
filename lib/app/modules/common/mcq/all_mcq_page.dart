@@ -1,5 +1,6 @@
+// TO DISPLAY THE LIST OF THE MCQ (FREE  AND ACCESS WITHOUT LOGIN )
+
 import 'package:benchmark/app/config/api_endpoint.dart';
-import 'package:benchmark/app/config/app_style.dart';
 import 'package:benchmark/app/modules/common/mcq/mcq_controller.dart';
 import 'package:benchmark/app/modules/common/pdf_view/pdf_controller.dart';
 import 'package:benchmark/app/modules/common/pdf_view/pdf_view_page.dart';

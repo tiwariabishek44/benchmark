@@ -1,3 +1,7 @@
+// TO DISPLAY THE LIST OF THE NOTE OF HE COURSE
+// LOCK NOTES ARE THE PAID NOTE AND HAD TO PURCHASE FOR ACCESS
+// UNLOCK NOTES ARE THE FREE NOTES AND CAN ACCESS WITHOUT LOIGN
+
 import 'package:benchmark/app/config/api_endpoint.dart';
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/constants.dart';

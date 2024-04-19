@@ -1,3 +1,5 @@
+// WELCOME HEADING HEADING PAGE
+
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/fonts.dart';
 import 'package:flutter/material.dart';

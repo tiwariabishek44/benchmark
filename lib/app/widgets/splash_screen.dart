@@ -1,3 +1,5 @@
+// SPLASH SCREEN
+
 import 'dart:async';
 
 import 'package:benchmark/app/config/color.dart';

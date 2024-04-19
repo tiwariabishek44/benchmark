@@ -1,3 +1,5 @@
+// TO DISPLAY INFORMATION WHEN THER IS NOT DATA
+
 import 'package:flutter/material.dart';
 
 class NoDataWidget extends StatelessWidget {

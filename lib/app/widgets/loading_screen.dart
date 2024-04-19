@@ -1,8 +1,8 @@
+// LOAIDNG SCREEN WHILE DATA IS FETCHING FROM SERVER
 import 'dart:ui';
 
 import 'package:benchmark/app/config/color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingScreen extends StatelessWidget {
   const LoadingScreen({

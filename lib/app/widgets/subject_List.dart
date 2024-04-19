@@ -1,10 +1,11 @@
+// TO DISPLAY THE LIST OF THE SUBJECT
+
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/constants.dart';
 import 'package:benchmark/app/config/fonts.dart';
 import 'package:benchmark/app/modules/common/course/course_page.dart';
 import 'package:benchmark/app/modules/common/course/course_controller.dart';
 import 'package:benchmark/app/modules/common/homepage.dart/stream_list.dart';
-import 'package:benchmark/app/modules/common/note_list/note_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';

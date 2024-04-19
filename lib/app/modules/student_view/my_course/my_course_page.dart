@@ -1,7 +1,8 @@
+//  TO GET TEH PURCHASE COURSE BY THE STUDENT
+
 import 'package:benchmark/app/config/app_style.dart';
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/fonts.dart';
-import 'package:benchmark/app/modules/common/course/course_controller.dart';
 import 'package:benchmark/app/modules/common/note_list/note_controller.dart';
 import 'package:benchmark/app/modules/common/note_list/note_list.dart';
 import 'package:benchmark/app/modules/student_view/my_course/my_course_controller.dart';
@@ -10,7 +11,6 @@ import 'package:benchmark/app/widgets/loading_screen.dart';
 import 'package:benchmark/app/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinput/pinput.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MyCoursePage extends StatelessWidget {

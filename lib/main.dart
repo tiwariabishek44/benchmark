@@ -1,4 +1,4 @@
-import 'dart:developer';
+// MAIN FLUTTER RUNNING PAGE
 
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/widgets/custom_snackbar.dart';

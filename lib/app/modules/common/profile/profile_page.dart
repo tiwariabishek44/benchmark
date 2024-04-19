@@ -1,9 +1,10 @@
+// PROFILE PAGE
+
 import 'package:benchmark/app/config/app_style.dart';
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/modules/common/login/login_controller.dart';
 import 'package:benchmark/app/modules/common/loginoption/login_option_view.dart';
 import 'package:benchmark/app/modules/common/profile/about_us.dart';
-import 'package:benchmark/app/modules/common/profile/edit_profile.dart/profile_controller.dart';
 import 'package:benchmark/app/modules/common/profile/terms_and_conditions.dart';
 import 'package:benchmark/app/widgets/custom_app_bar.dart';
 import 'package:benchmark/app/widgets/pop_up_logout.dart';
@@ -16,7 +17,6 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
   final loginController = Get.put(LoginController());
-  final profileController = Get.put(ProfileController());
   final storage = GetStorage();
 
   @override
