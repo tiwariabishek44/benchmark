@@ -10,7 +10,7 @@ import 'package:benchmark/app/widgets/custom_password_field.dart';
 import 'package:benchmark/app/widgets/customized_textfield.dart';
 import 'package:benchmark/app/widgets/welcome_heading.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; 
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 

@@ -1,7 +1,11 @@
 //LANDING PAGE OF THE APP  - TO DISPLAY HE GRADE
 
+import 'dart:developer';
+
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/constants.dart';
+import 'package:benchmark/app/config/prefs.dart';
+import 'package:benchmark/app/modules/common/course/course_controller.dart';
 import 'package:benchmark/app/modules/common/physical_items/physical_item_list_view.dart';
 import 'package:benchmark/app/modules/common/login/login_controller.dart';
 import 'package:benchmark/app/modules/common/note_list/note_controller.dart';
@@ -9,6 +13,7 @@ import 'package:benchmark/app/modules/common/profile/profile_page.dart';
 
 import 'package:benchmark/app/widgets/switch_case_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -18,6 +23,8 @@ class TeacherHomePage extends StatelessWidget {
   final loginController = Get.put(LoginController());
   final storage = GetStorage();
   final noteContorller = Get.put(NoteController());
+  final courseController = Get.put(CourseController());
+  String baseUrl = dotenv.get('BASE_URL');
 
   bool isPurchased = false; // Initialize with the default value
   @override
@@ -70,6 +77,7 @@ class TeacherHomePage extends StatelessWidget {
                               Spacer(),
                               GestureDetector(
                                 onTap: () {
+                                  // log("thi sis the string  $baseUrl");
                                   Get.to(() => PhysicalItemView(),
                                       transition: Transition.rightToLeft,
                                       duration: duration);
@@ -145,7 +153,7 @@ class TeacherHomePage extends StatelessWidget {
                                     noteContorller.selectedTopic.value = 1;
                                   },
                                   child: selectedTopics(
-                                      "MCQ's",
+                                      "Mcq's",
                                       noteContorller.selectedTopic.value == 1
                                           ? AppColors.backgroundColor
                                           : Colors.transparent,
@@ -153,6 +161,28 @@ class TeacherHomePage extends StatelessWidget {
                                           ? AppColors.mainColor
                                           : AppColors.iconColors)),
                             ),
+                            storage.read(userType) == 'TEACHER'
+                                ? Expanded(
+                                    child: GestureDetector(
+                                        onTap: () {
+                                          courseController.fetchAllCourse();
+                                          noteContorller.selectedTopic.value =
+                                              2;
+                                        },
+                                        child: selectedTopics(
+                                            "Mannual",
+                                            noteContorller
+                                                        .selectedTopic.value ==
+                                                    2
+                                                ? AppColors.backgroundColor
+                                                : Colors.transparent,
+                                            noteContorller
+                                                        .selectedTopic.value ==
+                                                    2
+                                                ? AppColors.mainColor
+                                                : AppColors.iconColors)),
+                                  )
+                                : SizedBox.shrink(),
                           ]),
                         ),
                       )

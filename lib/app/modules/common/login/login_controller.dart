@@ -33,7 +33,8 @@ class LoginController extends GetxController {
 
   void loginUser(BuildContext context) {
     if (loginFromkey.currentState!.validate()) {
-      loginOptionControllre.isUser.value ? login() : teacherLogin();
+      FocusScope.of(context).unfocus();
+      login();
     }
   }
 
@@ -59,11 +60,14 @@ class LoginController extends GetxController {
         loginApiResponse.value =
             ApiResponse<LoginApiResponse>.completed(loginResult.response);
 
+        log(" this is he  token ::::::: ${loginResult.response?.data.student.toString()}");
+
         saveDataLocally(
-            loginResult.response?.data!.accessToken.toString(),
-            loginResult.response?.data!.refreshToken.toString(),
-            loginResult.response?.data!.loginSessionHash.toString(),
-            true);
+            loginResult.response?.data.accessToken.toString(),
+            loginResult.response?.data.refreshToken.toString(),
+            loginResult.response?.data.loginSessionHash.toString(),
+            loginResult.response?.data.verified,
+            loginResult.response?.data.student);
 
         isLoginLoading(false);
       } else {
@@ -77,56 +81,15 @@ class LoginController extends GetxController {
     }
   }
 
-//--------------------TEACHER LOGIN ---------------
-
-  final Rx<ApiResponse<TeacherLoginResponse>> teacherLoginResponse =
-      ApiResponse<TeacherLoginResponse>.initial().obs;
-
-  Future<void> teacherLogin() async {
-    try {
-      isLoginLoading(true);
-      teacherLoginResponse.value = ApiResponse<TeacherLoginResponse>.loading();
-      final user = {
-        "email": emailcontroller.value.text.trim(),
-        "password": passwordcontroller.value.text.trim(),
-      };
-      final teacherLoginResult = await loginRepository.teacherLogin(user);
-      // log(registerResult.status.toString());
-
-      if (teacherLoginResult.status == ApiStatus.SUCCESS) {
-        teacherLoginResponse.value =
-            ApiResponse<TeacherLoginResponse>.completed(
-                teacherLoginResult.response);
-
-        saveDataLocally(
-          teacherLoginResult.response?.data!.accessToken.toString(),
-          teacherLoginResult.response?.data!.refreshToken.toString(),
-          teacherLoginResult.response?.data!.loginSessionHash.toString(),
-          teacherLoginResult.response?.data!.verified,
-        );
-
-        isLoginLoading(false);
-      } else {
-        isLoginLoading.value = false;
-        CustomSnackBar.showFailure(" ${teacherLoginResult.message}");
-      }
-    } catch (e) {
-      isLoginLoading(false);
-
-      log("thi is error $e");
-    }
-  }
-
-//---------TO SAVE USER DATA LOCALLY--------------
+// //---------TO SAVE USER DATA LOCALLY--------------
   void saveDataLocally(String? accessToken, String? refreshToken,
-      String? lgoinsessionhash, bool? isVerified) async {
+      String? lgoinsessionhash, bool? isVerified, bool? isStudetn) async {
     await TokenManager.setAccessToken(accessToken);
     await TokenManager.setRefreshToken(refreshToken!);
     await TokenManager.setSessionHash(lgoinsessionhash!);
 
     storage.write(accoutnType, isVerified!);
-    storage.write(
-        userType, loginOptionControllre.isUser.value ? 'STUDENT' : 'TEACHER');
+    storage.write(userType, isStudetn! ? 'STUDENT' : 'TEACHER');
     // getUserData();
     Get.offAll(() => SplashScreen());
   }
@@ -144,6 +107,7 @@ class LoginController extends GetxController {
 //------------TO CHECK IS USER IS LOG IN OR NOT------------
   bool isLogedIn() {
     if (storage.read(userType) != null) {
+      log("this is the account type :::::::${storage.read(accoutnType)}");
       //  Map<String, dynamic> decodedToken =
       String token = TokenManager.getAccessToken()!;
 

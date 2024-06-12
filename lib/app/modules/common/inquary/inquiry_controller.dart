@@ -42,11 +42,16 @@ class InquiryController extends GetxController {
 
       //==============Observe the API Response ===========
       if (response.status == ApiStatus.SUCCESS) {
+        isInquiryLoading(false);
         CustomSnackBar.showSuccess('Inqury is send succesfully');
       } else {
+        isInquiryLoading(false);
+
         CustomSnackBar.showFailure('${response.message}');
       }
     } catch (e) {
+      isInquiryLoading(false);
+
       log("Error occurred: $e");
       CustomSnackBar.showFailure('Error occurred: $e');
     } finally {

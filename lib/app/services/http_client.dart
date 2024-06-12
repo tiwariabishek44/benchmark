@@ -9,8 +9,9 @@ import 'package:benchmark/app/utils/token_util.dart';
 import 'package:benchmark/app/widgets/session_pop_up.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-const String BASE_URL = "http://localhost:8080";
+final String BASE_URL = dotenv.get('BASE_URL');
 const String ACCESS_TOKEN_REFRESH_ENDPOINT =
     "/api/open/common/account/access-token/refresh";
 const String FORBIDDEN_ACCESS = "FORBIDDEN_ACCESS";
@@ -112,3 +113,6 @@ class TokenInterceptor extends http.BaseClient {
 }
 
 final TokenInterceptor httpClient = TokenInterceptor();
+
+
+

@@ -3,6 +3,7 @@
 import 'package:benchmark/app/config/api_endpoint.dart';
 import 'package:benchmark/app/config/app_style.dart';
 import 'package:benchmark/app/config/color.dart';
+import 'package:benchmark/app/config/constants.dart';
 import 'package:benchmark/app/config/fonts.dart';
 import 'package:benchmark/app/modules/common/inquary/inquiry_controller.dart';
 import 'package:benchmark/app/modules/common/login/login_controller.dart';
@@ -11,6 +12,7 @@ import 'package:benchmark/app/widgets/custom_button.dart';
 import 'package:benchmark/app/widgets/customized_textfield.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -74,7 +76,7 @@ class InquiryPage extends StatelessWidget {
                             bottomLeft: Radius.circular(8),
                           ),
                           child: CachedNetworkImage(
-                            imageUrl: ApiEndpoints.baseUrl + image ?? '',
+                            imageUrl: dotenv.get('BASE_URL') + image ?? '',
                             fit: BoxFit.cover,
                             errorWidget: (context, url, error) =>
                                 Icon(Icons.error_outline, size: 40),
@@ -89,15 +91,7 @@ class InquiryPage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("ID:${bookid.toString()}",
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: AppColors.iconColors,
-                                  fontFamily: FontStyles.poppins,
-                                  fontSize: 17.sp,
-                                  fontWeight: FontWeight.bold,
-                                )),
+                             
                             Text(bookname,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -168,14 +162,14 @@ class InquiryPage extends StatelessWidget {
                     SizedBox(height: 16),
                   ],
                 ),
-                CustomButton(
-                  isLoading: false,
+                Obx(() => CustomButton(
+                      isLoading: inquryController.isInquiryLoading.value,
                   onPressed: () {
                     FocusScope.of(context).unfocus();
                     inquryController.productInqury(bookid);
                   },
                   text: "Send Inquiry",
-                ),
+                    )),
               ],
             ),
           ),

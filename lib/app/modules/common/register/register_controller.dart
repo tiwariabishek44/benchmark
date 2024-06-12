@@ -38,6 +38,8 @@ class RegisterController extends GetxController {
 
   void registerUser(BuildContext context) {
     if (registerFromkey.currentState!.validate()) {
+      FocusScope.of(context).unfocus();
+
       if (termsAndConditions.value) {
         register(context);
 

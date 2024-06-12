@@ -1,5 +1,7 @@
 //TO DISPLAY THE COURSE OF RESPECTVE GRADE
 
+import 'dart:developer';
+
 import 'package:benchmark/app/config/prefs.dart';
 import 'package:benchmark/app/widgets/loading_screen.dart';
 import 'package:flutter/material.dart';
@@ -63,10 +65,13 @@ class CoursePage extends StatelessWidget {
                   .courseResponse.value.response!.data
                   .where((course) {
                 final titleParts = title.split(' ');
-                final grades = titleParts[0];
-                final stream = titleParts[1];
+                final grades = titleParts[0].toLowerCase();
+                final stream = titleParts[1].toLowerCase();
+
+                log(" ::::::::::::::: ths is grade ${stream} and the course stream is ${course.stream}");
                 return course.grade == grades &&
-                    (course.stream == stream || course.stream == "BOTH");
+                    (course.stream.toLowerCase() == stream.toLowerCase() ||
+                        course.stream.toLowerCase() == "both");
               }).toList();
 
               if (filteredCourses.isEmpty) {

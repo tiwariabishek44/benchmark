@@ -145,11 +145,9 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
                           SizedBox(height: 16.0),
                           ElevatedButton(
                             onPressed: () {
-                              pdfcontroller
-                                  .createFileOfPdfUrl(widget.pdfUrl)
-                                  .then((file) {
-                                pdfcontroller.remotePDFpath.value = file.path;
-                              });
+                              pdfcontroller 
+                                  .fetchPdf(widget.pdfUrl);
+
                               // Add a function to retry or handle the error
                             },
                             child: Text(
@@ -158,7 +156,7 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
                                   TextStyle(color: AppColors.backgroundColor),
                             ),
                             style: ElevatedButton.styleFrom(
-                              primary: AppColors
+                              backgroundColor: AppColors
                                   .mainColor, // Customize the button color
                             ),
                           ),

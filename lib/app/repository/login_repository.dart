@@ -12,7 +12,7 @@ class LoginRepository {
   Future<ApiResponse<LoginApiResponse>> loginUser(requesBody) async {
     log(" INSIDE THE LOGIN REPOSITORY");
     final response = await ApiClient().postApi<LoginApiResponse>(
-      ApiEndpoints.secondLogin,
+      ApiEndpoints.userLogin,
       requestBody: requesBody,
       isTokenRequired: false,
       responseType: (json) => LoginApiResponse.fromJson(json),
@@ -21,16 +21,5 @@ class LoginRepository {
     return response;
   }
 
-//------------TEACHER LOGIN
-  Future<ApiResponse<TeacherLoginResponse>> teacherLogin(requesBody) async {
-    log(" INSIDE THE LOGIN REPOSITORY");
-    final response = await ApiClient().postApi<TeacherLoginResponse>(
-      ApiEndpoints.teacherLogin,
-      requestBody: requesBody,
-      isTokenRequired: false,
-      responseType: (json) => TeacherLoginResponse.fromJson(json),
-    );
 
-    return response;
-  }
 }
