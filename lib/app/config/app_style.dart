@@ -2,8 +2,7 @@ import 'package:benchmark/app/config/color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-
-Duration duration = const Duration(milliseconds: 360);
+ 
 
 class AppStyles {
   static TextStyle get appbar {
@@ -83,28 +82,5 @@ class AppStyles {
           fontWeight: FontWeight.w500,
         ));
   }
-
-  static TextStyle get topicsHeading {
-    return GoogleFonts.lato(
-        textStyle: TextStyle(
-      fontSize: 18.sp,
-      color: AppColors.iconColors,
-      fontWeight: FontWeight.w800,
-    ));
-  }
-
-  static TextStyle get topicsHeading1 {
-    return GoogleFonts.lato(
-        textStyle: TextStyle(
-      fontSize: 18.sp,
-      color: AppColors.backgroundColor,
-      fontWeight: FontWeight.w800,
-    ));
-  }
-}
-
-class AppPadding {
-  static EdgeInsetsGeometry get screenHorizontalPadding {
-    return EdgeInsets.symmetric(horizontal: 3.5.w);
-  }
+ 
 }

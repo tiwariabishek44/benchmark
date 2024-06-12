@@ -5,11 +5,14 @@ import 'package:benchmark/app/modules/common/mcq/mcq_controller.dart';
 import 'package:benchmark/app/modules/common/pdf_view/pdf_controller.dart';
 import 'package:benchmark/app/modules/common/pdf_view/pdf_view_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:benchmark/app/config/color.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+
+ 
 class AllMcqs extends StatefulWidget {
   AllMcqs({Key? key});
 
@@ -37,7 +40,7 @@ class _AllMcqsState extends State<AllMcqs> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'No Products Yet',
+                  "No Mcq's yet",
                 ),
                 IconButton(
                     onPressed: () async {
@@ -59,7 +62,7 @@ class _AllMcqsState extends State<AllMcqs> {
                   contentPadding: EdgeInsets.all(3),
                   tileColor: AppColors.backgroundColor,
                   onTap: () {
-                    pdfcontroller.fetchPdf(ApiEndpoints.baseUrl +
+                    pdfcontroller.fetchPdf(dotenv.get('BASE_URL') +
                         mcqController.mcqResponse.value.response!.data[index]
                             .fileLocation!);
                     pdfcontroller.enableSwipe.value = true;
@@ -68,7 +71,7 @@ class _AllMcqsState extends State<AllMcqs> {
                       () => PDFScreen(
                         title: mcqController
                             .mcqResponse.value.response!.data[index].name!,
-                        pdfUrl: ApiEndpoints.baseUrl +
+                        pdfUrl: dotenv.get('BASE_URL') +
                             mcqController.mcqResponse.value.response!
                                 .data[index].fileLocation!,
                       ),
@@ -122,3 +125,5 @@ class _AllMcqsState extends State<AllMcqs> {
     });
   }
 }
+
+

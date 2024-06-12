@@ -1,6 +1,7 @@
 import 'dart:developer';
 
-import 'package:benchmark/app/config/app_style.dart';
+import 'package:benchmark/app/config/constants.dart';
+
 import 'package:benchmark/app/model/api_response/course_buy_response.dart';
 import 'package:benchmark/app/repository/course_buy_reopsitory.dart';
 import 'package:benchmark/app/services/api_client.dart';

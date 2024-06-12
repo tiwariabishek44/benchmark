@@ -8,8 +8,9 @@ import 'package:benchmark/app/widgets/session_pop_up.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-final String BASE_URL = "http://localhost:8080";
+final String BASE_URL = dotenv.get('BASE_URL');
 final String ACCESS_TOKEN_REFRESH_ENDPOINT =
     "/api/open/common/account/access-token/refresh";
 final String FORBIDDEN_ACCESS = "FORBIDDEN_ACCESS";

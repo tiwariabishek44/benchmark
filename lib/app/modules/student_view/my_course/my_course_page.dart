@@ -1,6 +1,6 @@
 //  TO GET TEH PURCHASE COURSE BY THE STUDENT
+import 'package:benchmark/app/config/constants.dart';
 
-import 'package:benchmark/app/config/app_style.dart';
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/config/fonts.dart';
 import 'package:benchmark/app/modules/common/note_list/note_controller.dart';

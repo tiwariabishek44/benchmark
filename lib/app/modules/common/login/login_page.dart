@@ -1,6 +1,6 @@
 // LOIGN SCREEN FOR THE BOTH TEACHER AND   STUDENT
 
-import 'package:benchmark/app/config/app_style.dart';
+ 
 import 'package:benchmark/app/config/color.dart';
 import 'package:benchmark/app/modules/common/forget_password/forget_password_page.dart';
 import 'package:benchmark/app/modules/common/login/login_controller.dart';
@@ -8,6 +8,7 @@ import 'package:benchmark/app/modules/common/register/register.dart';
 import 'package:benchmark/app/widgets/custom_button.dart';
 import 'package:benchmark/app/widgets/custom_password_field.dart';
 import 'package:benchmark/app/widgets/customized_textfield.dart';
+import 'package:benchmark/app/config/constants.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

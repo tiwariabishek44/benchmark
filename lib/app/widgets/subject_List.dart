@@ -13,7 +13,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class SubjectList extends StatelessWidget {
   SubjectList({Key? key});
   final courseController = Get.put(CourseController());
-
+ 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(

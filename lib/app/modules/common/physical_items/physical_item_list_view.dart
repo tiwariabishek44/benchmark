@@ -7,6 +7,7 @@ import 'package:benchmark/app/modules/common/physical_items/physical_Items_contr
 import 'package:benchmark/app/widgets/custom_app_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -114,7 +115,7 @@ class PhysicalItemView extends StatelessWidget {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(7),
                                   child: CachedNetworkImage(
-                                    imageUrl: ApiEndpoints.baseUrl +
+                                    imageUrl: dotenv.get('BASE_URL') +
                                         physicalItemController
                                             .physicalItemresponse
                                             .value

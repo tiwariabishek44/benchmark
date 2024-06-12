@@ -17,6 +17,7 @@ import 'package:benchmark/app/widgets/custom_app_bar.dart';
 import 'package:benchmark/app/widgets/loading_screen.dart';
 import 'package:benchmark/app/widgets/no_note_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:benchmark/app/modules/common/pdf_view/pdf_view_page.dart';
 import 'package:get_storage/get_storage.dart';
@@ -69,7 +70,7 @@ class NotesList extends StatelessWidget {
                                   storage.read(userType) == 'TEACHER' ||
                                   (isPurchaseCourse != null &&
                                       isPurchaseCourse!)) {
-                                pdfController.fetchPdf(ApiEndpoints.baseUrl +
+                                pdfController.fetchPdf(dotenv.get('BASE_URL') +
                                     noteContorller.courseResponse.value
                                         .response!.data[index].fileLocation!);
                                 pdfController.enableSwipe.value = true;
@@ -77,7 +78,7 @@ class NotesList extends StatelessWidget {
                                 Get.to(
                                     () => PDFScreen(
                                           title: data.subject.toString(),
-                                          pdfUrl: ApiEndpoints.baseUrl +
+                                          pdfUrl: dotenv.get('BASE_URL') +
                                               noteContorller
                                                   .courseResponse
                                                   .value
@@ -191,51 +192,20 @@ class NotesList extends StatelessWidget {
 //
   Widget _buildCardContent(BuildContext context, Book note) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius:
-              BorderRadius.circular(20), // Adjust the radius as needed
-          border: Border.all(
-            color: const Color.fromARGB(255, 222, 217, 217),
-            width: 2,
+      padding: const EdgeInsets.all(8.0),
+      child: ListTile(
+        title: Text(
+          "${note.name}",
+          style: TextStyle(
+            fontSize: 18, // Adjust as needed
+            color: Colors.black, // or any other color you prefer
           ),
         ),
-        padding: EdgeInsets.all(16.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Image.asset('assets/pdf.jpg'),
-            ),
-            SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    note.name!,
-                    style: TextStyle(fontSize: 16, color: AppColors.iconColors),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    "@benchmark",
-                    style: TextStyle(fontSize: 16, color: AppColors.iconColors),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ),
-          ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // Adjust the curve radius
         ),
+        tileColor: Color.fromARGB(
+            255, 228, 228, 228), // Use Colors.lightGrey for light grey color
       ),
     );
   }

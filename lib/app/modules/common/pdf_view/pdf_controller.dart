@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
 
 class PdfController extends GetxController {
   var enableSwipe = true.obs;
@@ -14,21 +15,21 @@ class PdfController extends GetxController {
   var isLoading = false.obs;
 
   void fetchPdf(String url) async {
+    log(" this is the mannual location :::::::$url");
     await createFileOfPdfUrl(url).then((file) {
-      remotePDFpath.value = file.path;
+      if (file != null) {
+        remotePDFpath.value = file.path;
+      }
     });
   }
 
-  Future<File> createFileOfPdfUrl(String url) async {
+  Future<File?> createFileOfPdfUrl(String url) async {
     isLoading(true);
-    Completer<File> completer = Completer();
+    Completer<File?> completer = Completer();
     try {
       final filename = url.substring(url.lastIndexOf("/") + 1);
-
-      // Replace colons with underscores in filename
       final sanitizedFilename = filename.replaceAll(':', '_');
-
-      log("--------------This is the file name: $sanitizedFilename");
+      
 
       var response = await pdfHttpClient.get(Uri.parse(url));
       log("This is the response status code: ${response.statusCode}");
@@ -40,10 +41,10 @@ class PdfController extends GetxController {
       completer.complete(file);
       isLoading(false);
     } on SocketException catch (_) {
-      // Handle SocketException (No internet connection)
       isLoading(false);
       completer.completeError('No internet connection');
     } catch (e) {
+      log(" the eroro is ${e.toString()}");
       isLoading(false);
       completer.completeError('Error parsing asset file!');
     }

@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:benchmark/app/config/app_style.dart';
+import 'package:benchmark/app/config/constants.dart';
 import 'package:benchmark/app/model/api_response/forget_password_response.dart';
 import 'package:benchmark/app/modules/common/forget_password/new_password_page.dart';
 import 'package:benchmark/app/modules/common/loginoption/login_option_view.dart';
